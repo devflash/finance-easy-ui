@@ -1,14 +1,19 @@
 import { Outlet } from "react-router-dom";
 import { Navigation } from "../components/navigation";
+import Box from "@mui/material/Box";
 
 export const Home = () => {
   return (
-    // sidebar component
-    <div>
+    <Box
+      sx={{
+        display: "flex",
+        height: "100vh",
+      }}
+    >
       <Navigation />
-      <div>
+      <Box sx={{ padding: "1rem", flex: 1 }}>
         <Outlet />
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };

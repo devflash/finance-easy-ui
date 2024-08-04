@@ -8,13 +8,28 @@ const theme = createTheme({
   palette: {
     primary: {
       main: "#112D4E",
-      contrastText: "#ffffff  ",
+      contrastText: "#ffffff",
     },
     secondary: {
       main: "#DBE2EF",
     },
     background: {
       default: "#FAF8F8",
+    },
+  },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          margin: 0,
+          minHeight: "100vh",
+        },
+        a: {
+          display: "block",
+          textDecoration: "none",
+          color: "#fff",
+        },
+      },
     },
   },
 });
