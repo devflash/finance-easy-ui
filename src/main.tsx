@@ -3,11 +3,23 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./router";
+import { makeServer } from "./mocks/server.ts";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
+if (import.meta.env.DEV) {
+  makeServer();
+}
+
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <App>
-      <RouterProvider router={router} />
-    </App>
+    <QueryClientProvider client={queryClient}>
+      <App>
+        <RouterProvider router={router} />
+      </App>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   </React.StrictMode>
 );
