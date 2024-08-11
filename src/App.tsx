@@ -22,6 +22,7 @@ const theme = createTheme({
       styleOverrides: {
         body: {
           margin: 0,
+          height: "100%",
           minHeight: "100vh",
         },
         a: {

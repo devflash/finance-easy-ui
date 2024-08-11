@@ -11,7 +11,7 @@ export const Home = () => {
       }}
     >
       <Navigation />
-      <Box sx={{ padding: "1rem", flex: 1 }}>
+      <Box sx={{ padding: "1rem", flex: 1, minWidth: "0px" }}>
         <Outlet />
       </Box>
     </Box>
