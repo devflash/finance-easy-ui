@@ -32,6 +32,19 @@ const theme = createTheme({
         },
       },
     },
+    MuiButton: {
+      styleOverrides: {
+        root: ({ ownerState }) => ({
+          ...(ownerState.color === "primary" &&
+            ownerState.variant === "contained" &&
+            {
+              // borderRadius: "15px",
+              // fontSize: "1rem",
+              // padding: "10px 15px",
+            }),
+        }),
+      },
+    },
   },
 });
 
