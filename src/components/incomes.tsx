@@ -53,7 +53,6 @@ const columns: Column<IIncome>[] = [
 
 export const Incomes = () => {
   const { data } = useQuery({ queryKey: ["incomes"], queryFn: getIncomes });
-
   if (!data) {
     return <p>No incomes</p>;
   }
