@@ -2,12 +2,10 @@ import MenuItem from "@mui/material/MenuItem";
 import { Input, InputProps } from "./input";
 
 type SelectProps = InputProps & {
-  options: [
-    {
-      label: string;
-      value: string;
-    }
-  ];
+  options: {
+    label: string;
+    value: string;
+  }[];
 };
 export const Select = (props: SelectProps) => {
   const { options, ...rest } = props;

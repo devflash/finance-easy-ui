@@ -1,6 +1,7 @@
 import FormControl from "@mui/material/FormControl";
 import TextField, { TextFieldProps } from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
+import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -9,6 +10,7 @@ import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 export type InputProps = TextFieldProps & {
   subLabelText: string;
   label: string;
+  errorText?: string;
 };
 
 const FormRow = styled(FormControl)(({ theme }) => ({
@@ -24,21 +26,24 @@ const FormRow = styled(FormControl)(({ theme }) => ({
   },
 }));
 
-const InputField = styled(TextField)(({ theme }) => ({
-  border: "1px solid #A29E9E",
-  borderRadius: "10px",
+const InputWrapper = styled(Box)(({ theme }) => ({
   minWidth: "3.5rem",
   maxWidth: "25rem",
   flex: 1,
-
-  ".MuiInputBase-input": {
-    paddingLeft: "10px",
-    paddingRight: "10px",
-  },
   [theme.breakpoints.down("md")]: {
     width: "100%",
     maxWidth: "100%",
     margin: "1rem 0",
+  },
+}));
+
+const InputField = styled(TextField)(({ theme, error }) => ({
+  border: error ? `1px solid ${theme.palette.error.main}` : "1px solid #A29E9E",
+  borderRadius: "10px",
+  width: "100%",
+  ".MuiInputBase-input": {
+    paddingLeft: "10px",
+    paddingRight: "10px",
   },
 }));
 
@@ -49,10 +54,7 @@ const Label = styled(InputLabel)(({ theme }) => ({
   overflow: "unset",
   maxWidth: "16rem",
   textWrap: "wrap",
-  "& > p": {
-    color: "#A29E9E",
-    fontSize: "0.7rem",
-  },
+  "& > p": {},
   [theme.breakpoints.down("md")]: {
     width: "100%",
     maxWidth: "100%",
@@ -60,45 +62,68 @@ const Label = styled(InputLabel)(({ theme }) => ({
 }));
 
 export const Input = ({
-  label,
   id,
-  subLabelText,
-  value,
   type,
-  select,
+  label,
+  value,
+  subLabelText,
   children,
-  multiline,
-  maxRows,
-  rows,
+  onChange,
+  required,
+  error,
+  errorText,
+  ...rest
 }: InputProps) => {
   return (
     <FormRow fullWidth>
       <Label shrink htmlFor={id} sx={{ color: "#000000" }}>
-        {label}
-        {subLabelText && <Typography component="p">{subLabelText}</Typography>}
+        <Typography component="p" sx={{ display: "flex" }}>
+          {label}
+          {required && <Typography>*</Typography>}
+        </Typography>
+        {subLabelText && (
+          <Typography
+            component="p"
+            sx={{ color: "#A29E9E", fontSize: "0.7rem" }}
+          >
+            {subLabelText}
+          </Typography>
+        )}
       </Label>
-
-      <InputField
-        id={id}
-        value={value}
-        type={type}
-        select={select}
-        variant="standard"
-        multiline={multiline}
-        maxRows={maxRows}
-        rows={rows}
-        InputProps={{
-          disableUnderline: true,
-          startAdornment:
-            type === "number" ? (
-              <InputAdornment position="end">
-                <CurrencyRupeeIcon />
-              </InputAdornment>
-            ) : null,
-        }}
-      >
-        {children}
-      </InputField>
+      <InputWrapper>
+        <InputField
+          id={id}
+          value={value}
+          type={type}
+          variant="standard"
+          error={error}
+          // helperText="Field is required"
+          InputProps={{
+            disableUnderline: true,
+            startAdornment:
+              type === "number" ? (
+                <InputAdornment position="end">
+                  <CurrencyRupeeIcon />
+                </InputAdornment>
+              ) : null,
+          }}
+          onChange={onChange}
+          {...rest}
+        >
+          {children}
+        </InputField>
+        {error ? (
+          <Typography
+            sx={{
+              fontSize: "0.8rem",
+              pl: "0.5rem",
+              color: (theme) => theme.palette.error.main,
+            }}
+          >
+            {errorText}
+          </Typography>
+        ) : null}
+      </InputWrapper>
     </FormRow>
   );
 };

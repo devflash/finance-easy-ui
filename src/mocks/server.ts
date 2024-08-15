@@ -17,11 +17,18 @@ export function makeServer(config: IConfig= {}) {
     },
     
     routes() {
-      this.namespace = "api/v1";
+      this.urlPrefix='http://localhost:3000/'
+      this.namespace = "/api/v1/";
       
-      this.get("/incomes/all", (schema) => {
+      this.get("incomes/all", (schema) => {
         return schema.all('income')
       });
+      
+      this.post('incomes/create', (schema, request)=>{
+        const body = JSON.parse(request.requestBody);
+        return schema.create('income', body)
+      });
+      this.passthrough()
     },
     seeds(server) {
       server.db.loadData({
