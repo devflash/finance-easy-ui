@@ -10,3 +10,8 @@ export interface IIncome{
     createdAt: Date;
     updateAt: Date;
 }
+
+export type IncomeData = Record<
+  keyof Omit<IIncome, "_id" | "userId" | "createdAt" | "updateAt">,
+  string
+>;
