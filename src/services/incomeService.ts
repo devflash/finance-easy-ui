@@ -10,3 +10,8 @@ export const createIncomes = async (income: IncomeData): Promise<IIncome[]> => {
     const response = await axiosInstance.post("api/v1/incomes/create", income);
     return response.data.income;
 };
+
+export const searchIncomes = async (queryParams: object): Promise<IIncome[]> => {
+    const response = await axiosInstance.get("api/v1/incomes/search", {params: queryParams});
+    return response.data.incomes;
+};

@@ -8,7 +8,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 
 export type InputProps = TextFieldProps & {
-  subLabelText: string;
+  subLabelText?: string;
   label: string;
   errorText?: string;
 };
@@ -20,6 +20,8 @@ const FormRow = styled(FormControl)(({ theme }) => ({
   margin: "15px 0 20px",
   alignItems: "center",
   maxWidth: "920px",
+  flexWrap: "wrap",
+  gap: 10,
   [theme.breakpoints.down("md")]: {
     flexDirection: "column",
     maxWidth: "100%",
@@ -27,13 +29,13 @@ const FormRow = styled(FormControl)(({ theme }) => ({
 }));
 
 const InputWrapper = styled(Box)(({ theme }) => ({
-  minWidth: "3.5rem",
-  maxWidth: "25rem",
-  flex: 1,
+  flex: "0 1 450px",
+  width: "100%",
   [theme.breakpoints.down("md")]: {
     width: "100%",
     maxWidth: "100%",
     margin: "1rem 0",
+    flex: "1 1 auto",
   },
 }));
 
@@ -52,8 +54,8 @@ const Label = styled(InputLabel)(({ theme }) => ({
   transform: "unset",
   transformOrigin: "unset",
   overflow: "unset",
-  maxWidth: "16rem",
   textWrap: "wrap",
+  width: "250px",
   "& > p": {},
   [theme.breakpoints.down("md")]: {
     width: "100%",

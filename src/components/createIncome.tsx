@@ -37,7 +37,7 @@ const formData: FormData<IncomeData> = [
         subLabelText="Please enter the source name from where the income is received"
         onChange={onChange}
         required
-        error={state.errors.source}
+        error={state?.errors?.source}
         errorText={"Source is mandatory"}
       />
     ),
@@ -54,7 +54,7 @@ const formData: FormData<IncomeData> = [
         type="number"
         onChange={onChange}
         required
-        error={state.errors.amount}
+        error={state?.errors?.amount}
         errorText={"Amount is mandatory"}
       />
     ),
@@ -73,7 +73,7 @@ const formData: FormData<IncomeData> = [
           { label: "Bank account", value: "bankAccount" },
         ]}
         required
-        error={state.errors.depositType}
+        error={state?.errors?.depositType}
         errorText={"Deposite type is mandatory"}
         onChange={onChange}
       />
@@ -91,7 +91,7 @@ const formData: FormData<IncomeData> = [
         options={[{ label: "Salary", value: "salary" }]}
         onChange={onChange}
         required
-        error={state.errors.category}
+        error={state?.errors?.category}
         errorText={"Category is mandatory"}
       />
     ),
@@ -122,7 +122,7 @@ const formData: FormData<IncomeData> = [
         subLabelText="Please select the date when the income is received"
         type="date"
         required
-        error={state.errors.incomeDate}
+        error={state?.errors?.incomeDate}
         errorText={"Income date is mandatory"}
         onChange={onChange}
       />

@@ -1,10 +1,11 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-nocheck
 import { createServer, Model } from "miragejs";
 import incomes from './jsons/incomes.json'
 
 type IConfig = {
   environment?: string
 }
-
 
 export function makeServer(config: IConfig= {}) {
   const {environment='development'} = config
@@ -27,6 +28,27 @@ export function makeServer(config: IConfig= {}) {
       this.post('incomes/create', (schema, request)=>{
         const body = JSON.parse(request.requestBody);
         return schema.create('income', body)
+      });
+
+      this.get("incomes/search", (schema, request) => {
+        const source = request.queryParams.source
+        const category = request.queryParams.category
+        return schema.all('income').filter((value)=> {
+          if(source && category){
+            return value.attrs.source === source && value.attrs.category === category
+
+          }
+          else if(source){
+            return value.attrs.source === source
+          }
+          else if(category){
+            return value.attrs.category === category
+          }
+          else{
+            return true
+          }
+        }
+        )
       });
       this.passthrough()
     },

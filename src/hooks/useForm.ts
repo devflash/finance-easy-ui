@@ -12,7 +12,7 @@ type Errors<T> = Partial<Record<keyof T, boolean>>;
 type Data<T> = Record<keyof T, string>
 export type FormState<T> = {
     data: Data<T>,
-    errors: Errors<T>
+    errors?: Errors<T>
 }
 
 type IAction<T> =

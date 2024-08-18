@@ -1,12 +1,10 @@
 import { Table, Column } from "./common/Table";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { useQuery } from "@tanstack/react-query";
-import { getIncomes } from "../services/incomeService";
 import { IIncome } from "../utils/types";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-
+import { useSearchIncomes } from "../hooks/useSearchIncomes";
 const columns: Column<IIncome>[] = [
   {
     id: "source",
@@ -52,8 +50,9 @@ const columns: Column<IIncome>[] = [
 ];
 
 export const Incomes = () => {
-  const { data } = useQuery({ queryKey: ["incomes"], queryFn: getIncomes });
-  if (!data) {
+  const { data } = useSearchIncomes();
+
+  if (!data?.length) {
     return <p>No incomes</p>;
   }
 
