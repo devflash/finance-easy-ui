@@ -25,8 +25,8 @@ const initialState: FormState<IncomeData> = {
   errors: {},
 };
 
-const formData: FormData<IncomeData> = [
-  {
+const formData: FormData<IncomeData> = {
+  source: {
     name: "source",
     validation: (value) => value === "",
     render: (state, onChange) => (
@@ -42,7 +42,8 @@ const formData: FormData<IncomeData> = [
       />
     ),
   },
-  {
+
+  amount: {
     name: "amount",
     validation: (value) => value === "",
     render: (state, onChange) => (
@@ -59,7 +60,7 @@ const formData: FormData<IncomeData> = [
       />
     ),
   },
-  {
+  depositType: {
     name: "depositType",
     validation: (value) => value === "",
     render: (state, onChange) => (
@@ -79,7 +80,7 @@ const formData: FormData<IncomeData> = [
       />
     ),
   },
-  {
+  category: {
     name: "category",
     validation: (value) => value === "",
     render: (state, onChange) => (
@@ -96,7 +97,7 @@ const formData: FormData<IncomeData> = [
       />
     ),
   },
-  {
+  description: {
     name: "description",
     render: (state, onChange) => (
       <Input
@@ -111,7 +112,7 @@ const formData: FormData<IncomeData> = [
       />
     ),
   },
-  {
+  incomeDate: {
     name: "incomeDate",
     validation: (value) => value === "",
     render: (state, onChange) => (
@@ -128,7 +129,7 @@ const formData: FormData<IncomeData> = [
       />
     ),
   },
-];
+};
 
 export const CreateIncome = ({ action }: CreateIncomeProps) => {
   const { formState, validation, handleValueChange } = useForm(
@@ -165,7 +166,9 @@ export const CreateIncome = ({ action }: CreateIncomeProps) => {
         Please provide the details about the income
       </Typography>
       <Box>
-        {formData.map((input) => input.render(formState, handleValueChange))}
+        {Object.values(formData).map((input) =>
+          input.render(formState, handleValueChange)
+        )}
       </Box>
       <FormActions
         submitBtnLabel="Create Income"

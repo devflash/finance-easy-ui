@@ -6,10 +6,14 @@ type FormInput<T> = {
     render: (state: FormState<T>, onChange: (e: React.ChangeEvent<HTMLInputElement>)=> void) => JSX.Element
 }
 
-export type FormData<T> = FormInput<T>[]
+export type FormData<T> = {
+  [K in keyof T]: FormInput<T>
+}
 
 type Errors<T> = Partial<Record<keyof T, boolean>>;
+
 type Data<T> = Record<keyof T, string>
+
 export type FormState<T> = {
     data: Data<T>,
     errors?: Errors<T>
@@ -64,13 +68,12 @@ export const useForm = <T>(formInputs: FormData<T>, initialState: FormState<T>) 
         errorFn: (error: Errors<T>) => void
       ) => {
         const errors: Errors<T> = {};
-        for(const input of formInputs){
-            const key = input.name as keyof T;
+        for(const input of Object.values(formInputs) as FormInput<T>[]){
+            const key = input.name;
             if(typeof input.validation === 'function'){
                 const isError = input.validation(formState.data[key])
                 if(isError){
                     errors[key] = isError
-
                 }
             }
         }

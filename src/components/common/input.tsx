@@ -21,7 +21,7 @@ const FormRow = styled(FormControl)(({ theme }) => ({
   alignItems: "center",
   maxWidth: "920px",
   flexWrap: "wrap",
-  gap: 10,
+  rowGap: 20,
   [theme.breakpoints.down("md")]: {
     flexDirection: "column",
     maxWidth: "100%",
@@ -29,7 +29,7 @@ const FormRow = styled(FormControl)(({ theme }) => ({
 }));
 
 const InputWrapper = styled(Box)(({ theme }) => ({
-  flex: "0 1 450px",
+  flex: "1 1 450px",
   width: "100%",
   [theme.breakpoints.down("md")]: {
     width: "100%",

@@ -5,6 +5,7 @@ import { Input } from "./common/input";
 import { Select } from "./common/select";
 import { useSearchParams } from "react-router-dom";
 import { useGlobalState } from "../hooks/useGlobalState";
+
 type IIncomeFilter = {
   source: string;
   category: string;
@@ -20,8 +21,8 @@ const initialState: FormState<IIncomeFilter> = {
   },
 };
 
-const formInputs: FormData<IIncomeFilter> = [
-  {
+const formInputs: FormData<IIncomeFilter> = {
+  source: {
     name: "source",
     render: (state, onChange) => (
       <Input
@@ -32,7 +33,7 @@ const formInputs: FormData<IIncomeFilter> = [
       />
     ),
   },
-  {
+  category: {
     name: "category",
     render: (state, onChange) => (
       <Select
@@ -44,7 +45,7 @@ const formInputs: FormData<IIncomeFilter> = [
       />
     ),
   },
-  {
+  startDate: {
     name: "startDate",
     render: (state, onChange) => (
       <Input
@@ -56,7 +57,7 @@ const formInputs: FormData<IIncomeFilter> = [
       />
     ),
   },
-  {
+  endDate: {
     name: "endDate",
     render: (state, onChange) => (
       <Input
@@ -68,7 +69,7 @@ const formInputs: FormData<IIncomeFilter> = [
       />
     ),
   },
-];
+};
 
 export const IncomeFilter = () => {
   const { setOpenDialog } = useGlobalState();
@@ -95,7 +96,12 @@ export const IncomeFilter = () => {
       dialogBtnHandler={filterHandler}
     >
       <Box>
-        {formInputs.map((input) => input.render(formState, handleValueChange))}
+        {formInputs.source.render(formState, handleValueChange)}
+        {formInputs.category.render(formState, handleValueChange)}
+        <Box sx={{ display: "flex", gap: 5 }}>
+          {formInputs.startDate.render(formState, handleValueChange)}
+          {formInputs.endDate.render(formState, handleValueChange)}
+        </Box>
       </Box>
     </Dialog>
   );
