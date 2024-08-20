@@ -26,7 +26,7 @@ const formInputs: FormData<IIncomeFilter> = {
     name: "source",
     render: (state, onChange) => (
       <Input
-        value={state.data.source}
+        value={state.data?.source}
         name="source"
         label="Income source"
         onChange={onChange}
@@ -38,7 +38,7 @@ const formInputs: FormData<IIncomeFilter> = {
     render: (state, onChange) => (
       <Select
         name="category"
-        value={state.data.category}
+        value={state.data?.category}
         label="Category"
         options={[{ label: "Salary", value: "salary" }]}
         onChange={onChange}
@@ -50,7 +50,7 @@ const formInputs: FormData<IIncomeFilter> = {
     render: (state, onChange) => (
       <Input
         name="startDate"
-        value={state.data.startDate}
+        value={state.data?.startDate}
         label="Start Date"
         type="date"
         onChange={onChange}
@@ -62,7 +62,7 @@ const formInputs: FormData<IIncomeFilter> = {
     render: (state, onChange) => (
       <Input
         name="endDate"
-        value={state.data.endDate}
+        value={state.data?.endDate}
         label="End Date"
         type="date"
         onChange={onChange}
@@ -78,11 +78,13 @@ export const IncomeFilter = () => {
 
   const filterHandler = () => {
     const query: Partial<IIncomeFilter> = {};
-    for (const entry of Object.entries(formState.data)) {
-      const key = entry[0] as keyof typeof formState.data;
-      const value = entry[1];
-      if (formState.data[key]) {
-        query[key] = value;
+    if (formState.data) {
+      for (const entry of Object.entries(formState.data)) {
+        const key = entry[0] as keyof typeof formState.data;
+        const value = entry[1];
+        if (formState.data[key]) {
+          query[key] = value;
+        }
       }
     }
     setSearchParams(query);

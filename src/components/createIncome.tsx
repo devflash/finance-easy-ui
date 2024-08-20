@@ -7,8 +7,9 @@ import { FormActions } from "./common/formActions";
 import { useMutation } from "@tanstack/react-query";
 import { createIncomes } from "../services/incomeService";
 import { useNavigate } from "react-router-dom";
-import { useForm, FormData, FormState } from "../hooks/useForm";
+import { FormData, FormState } from "../hooks/useForm";
 import { IncomeData } from "../utils/types";
+import { Form, IFormContext } from "./common/form";
 type CreateIncomeProps = {
   action: "create" | "edit";
 };
@@ -31,7 +32,7 @@ const formData: FormData<IncomeData> = {
     validation: (value) => value === "",
     render: (state, onChange) => (
       <Input
-        value={state.data.source}
+        value={state.data?.source}
         name="source"
         label="Income source"
         subLabelText="Please enter the source name from where the income is received"
@@ -48,7 +49,7 @@ const formData: FormData<IncomeData> = {
     validation: (value) => value === "",
     render: (state, onChange) => (
       <Input
-        value={state.data.amount}
+        value={state.data?.amount}
         name="amount"
         label="Amount"
         subLabelText="Please enter the received amout"
@@ -66,7 +67,7 @@ const formData: FormData<IncomeData> = {
     render: (state, onChange) => (
       <Select
         name="depositType"
-        value={state.data.depositType}
+        value={state.data?.depositType}
         label="Deposite Type"
         subLabelText="Please select the type of deposite"
         options={[
@@ -86,7 +87,7 @@ const formData: FormData<IncomeData> = {
     render: (state, onChange) => (
       <Select
         name="category"
-        value={state.data.category}
+        value={state.data?.category}
         label="Category"
         subLabelText="Please select the catehory of the income"
         options={[{ label: "Salary", value: "salary" }]}
@@ -102,7 +103,7 @@ const formData: FormData<IncomeData> = {
     render: (state, onChange) => (
       <Input
         name="description"
-        value={state.data.description}
+        value={state.data?.description}
         label="Notes"
         subLabelText="Please enter the short description about the income"
         multiline
@@ -118,7 +119,7 @@ const formData: FormData<IncomeData> = {
     render: (state, onChange) => (
       <Input
         name="incomeDate"
-        value={state.data.incomeDate}
+        value={state.data?.incomeDate}
         label="Income Date"
         subLabelText="Please select the date when the income is received"
         type="date"
@@ -132,10 +133,6 @@ const formData: FormData<IncomeData> = {
 };
 
 export const CreateIncome = ({ action }: CreateIncomeProps) => {
-  const { formState, validation, handleValueChange } = useForm(
-    formData,
-    initialState
-  );
   const navigate = useNavigate();
   const mutation = useMutation({
     mutationFn: createIncomes,
@@ -144,10 +141,13 @@ export const CreateIncome = ({ action }: CreateIncomeProps) => {
     },
   });
 
-  const createIncomeHandler = () => {
+  const createIncomeHandler = (
+    formState: IFormContext<IncomeData>["formState"],
+    validation: IFormContext<IncomeData>["validation"]
+  ) => {
     validation(
       () => {
-        mutation.mutate(formState.data);
+        if (formState.data) mutation.mutate(formState.data);
       },
       (errors) => {
         console.log("errors", errors);
@@ -166,15 +166,18 @@ export const CreateIncome = ({ action }: CreateIncomeProps) => {
         Please provide the details about the income
       </Typography>
       <Box>
-        {Object.values(formData).map((input) =>
-          input.render(formState, handleValueChange)
-        )}
+        <Form
+          formInputs={formData}
+          state={initialState}
+          formActions={
+            <FormActions<IncomeData>
+              submitBtnLabel="Create Income"
+              submitBtnClick={createIncomeHandler}
+              cancelBtnClick={cancelHandler}
+            />
+          }
+        />
       </Box>
-      <FormActions
-        submitBtnLabel="Create Income"
-        submitBtnClick={createIncomeHandler}
-        cancelBtnClick={cancelHandler}
-      />
     </Paper>
   );
 };

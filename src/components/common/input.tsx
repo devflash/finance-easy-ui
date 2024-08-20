@@ -21,7 +21,7 @@ const FormRow = styled(FormControl)(({ theme }) => ({
   alignItems: "center",
   maxWidth: "920px",
   flexWrap: "wrap",
-  rowGap: 20,
+  gap: 20,
   [theme.breakpoints.down("md")]: {
     flexDirection: "column",
     maxWidth: "100%",

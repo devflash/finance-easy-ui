@@ -1,15 +1,20 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
-
+import { useFormContext } from "../../hooks/useFormContext";
+import { FormState } from "../../hooks/useForm";
+import { IFormContext } from "./form";
 type ButtonProp = {
   isPrimary?: boolean;
 };
 
-type FormActionButtonProps = {
+type FormActionButtonProps<T> = {
   submitBtnLabel: string;
   cancelBtnLabel?: string;
-  submitBtnClick: () => void;
+  submitBtnClick: (
+    formState: FormState<T>,
+    validation: IFormContext<T>["validation"]
+  ) => void;
   cancelBtnClick: () => void;
 };
 
@@ -28,13 +33,14 @@ const CustomButton = styled(Button)<ButtonProp>(({ theme, isPrimary }) => ({
   },
 }));
 
-export const FormActions = (props: FormActionButtonProps) => {
+export const FormActions = <T,>(props: FormActionButtonProps<T>) => {
   const {
     submitBtnLabel,
     submitBtnClick,
     cancelBtnClick,
     cancelBtnLabel = "Cancel",
   } = props;
+  const { formState, validation } = useFormContext<T>();
   return (
     <Box
       sx={(theme) => ({
@@ -49,7 +55,10 @@ export const FormActions = (props: FormActionButtonProps) => {
       })}
     >
       <CustomButton onClick={cancelBtnClick}>{cancelBtnLabel}</CustomButton>
-      <CustomButton isPrimary onClick={submitBtnClick}>
+      <CustomButton
+        isPrimary
+        onClick={() => submitBtnClick(formState, validation)}
+      >
         {submitBtnLabel}
       </CustomButton>
     </Box>
