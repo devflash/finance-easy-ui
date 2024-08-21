@@ -9,13 +9,17 @@ type ButtonProp = {
 };
 
 type FormActionButtonProps<T> = {
-  submitBtnLabel: string;
+  submitBtnLabel?: string;
   cancelBtnLabel?: string;
-  submitBtnClick: (
+  submitBtnClick?: (
     formState: FormState<T>,
     validation: IFormContext<T>["validation"]
   ) => void;
-  cancelBtnClick: () => void;
+  cancelBtnClick?: () => void;
+  render?: (
+    formState: FormState<T>,
+    validation: IFormContext<T>["validation"]
+  ) => JSX.Element;
 };
 
 const CustomButton = styled(Button)<ButtonProp>(({ theme, isPrimary }) => ({
@@ -41,6 +45,9 @@ export const FormActions = <T,>(props: FormActionButtonProps<T>) => {
     cancelBtnLabel = "Cancel",
   } = props;
   const { formState, validation } = useFormContext<T>();
+  if (props.render) {
+    return props.render(formState, validation);
+  }
   return (
     <Box
       sx={(theme) => ({
@@ -57,7 +64,7 @@ export const FormActions = <T,>(props: FormActionButtonProps<T>) => {
       <CustomButton onClick={cancelBtnClick}>{cancelBtnLabel}</CustomButton>
       <CustomButton
         isPrimary
-        onClick={() => submitBtnClick(formState, validation)}
+        onClick={() => submitBtnClick?.(formState, validation)}
       >
         {submitBtnLabel}
       </CustomButton>
