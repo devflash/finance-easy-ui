@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { useForm, FormData, FormState, FormInput } from "../../hooks/useForm";
+import { useForm, FormData, FormState } from "../../hooks/useForm";
 import Box from "@mui/material/Box";
 type IFormProps<T> = {
   formInputs: FormData<T>;
@@ -38,7 +38,7 @@ export const Form = <T,>({
       <Box>
         {children
           ? children
-          : Object.values(formInputs as FormInput<T>[]).map((input) =>
+          : Object.values(formInputs).map((input) =>
               input.render(formState, handleValueChange)
             )}
       </Box>

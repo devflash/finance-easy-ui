@@ -1,18 +1,22 @@
 import { useReducer } from "react";
+import _ from "lodash";
 
 export type FormInput<T> = {
-    name: keyof T,
+    name: string,
     validation?: (value?: string ) => boolean
     render: (state: FormState<T>, onChange: (e: React.ChangeEvent<HTMLInputElement>)=> void) => JSX.Element
 }
 
-export type FormData<T> = {
-  [K in keyof T]: FormInput<T>
+export type FormData<T> = Record<string, FormInput<T>>
+
+
+export type Errors<T> = {
+  [K in keyof T]?: T[K] extends object ? Errors<T[K]> : boolean
+};
+
+export type Data<T> = {
+  [K in keyof T]: T[K]
 }
-
-export type Errors<T> = Partial<Record<keyof T, boolean>>;
-
-export type Data<T> = Record<keyof T, string>
 
 export type FormState<T> = {
     data?: Data<T> | null,
@@ -34,19 +38,13 @@ const createReducer = <T>() => (state: FormState<T>, action: IAction<T>): FormSt
     case "UPDATE_VALUES": {
       return {
         ...state,
-        data: {
-          ...state.data,
-          ...action.payload
-        },
+        data: _.merge({...state.data}, {...action.payload})
       };
     }
     case "UPDATE_ERROR": {
       return {
         ...state,
-        errors: {
-          ...state.errors,
-          ...action.payload,
-        },
+        errors: _.merge({...state.errors}, {...action.payload})
       };
     }
     default: {
@@ -67,9 +65,9 @@ export const useForm = <T>(formInputs: FormData<T>, initialState: FormState<T>) 
         for(const input of Object.values(formInputs) as FormInput<T>[]){
             const key = input.name;
             if(typeof input.validation === 'function'){
-                const isError = input.validation(formState.data?.[key])
+                const isError = input.validation(_.get(formState.data, key as string))
                 if(isError){
-                    errors[key] = isError
+                    _.set(errors, key, isError)
                 }
             }
         }
@@ -84,8 +82,9 @@ export const useForm = <T>(formInputs: FormData<T>, initialState: FormState<T>) 
       const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const name = e.target.name as keyof T
         const value = e.target.value
-        dispatch({ type: "UPDATE_VALUES", payload: {[name]: value } as Data<T> });
-        dispatch({ type: "UPDATE_ERROR", payload: { [name]: false } as Errors<T> });
+        // dispatch({ type: "UPDATE_VALUES", payload: {[name]: value } as Data<T> });
+        dispatch({ type: "UPDATE_VALUES", payload: _.set({}, name, value) as Data<T> });
+        dispatch({ type: "UPDATE_ERROR", payload: _.set({}, name, false) as Errors<T> });
       };
 
       return {formState, validation, handleValueChange}
