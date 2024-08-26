@@ -17,7 +17,7 @@ import { FormActions } from "../common/formActions";
 import { StepWizardActions } from "../common/stepWizard/stepWizardActions";
 type IBudgetAllocation = {
   isExpectedAmount: boolean;
-  expectedAmount: number;
+  expectedAmount: string;
   percentages: {
     needs: number;
     wants: number;
@@ -28,7 +28,7 @@ type IBudgetAllocation = {
 const initialState: FormState<IBudgetAllocation> = {
   data: {
     isExpectedAmount: false,
-    expectedAmount: 0,
+    expectedAmount: "",
     percentages: {
       needs: 0,
       wants: 0,
@@ -47,7 +47,7 @@ const formInputs: FormData<IBudgetAllocation> = {
             name="isExpectedAmount"
             checked={state.data?.isExpectedAmount}
             inputProps={{ type: "checkbox" }}
-            onChange={onChange}
+            onChange={(e) => onChange(e)}
           />
         }
         label="I would like to create budget using the expected income"
@@ -56,6 +56,27 @@ const formInputs: FormData<IBudgetAllocation> = {
   },
   expectedAmount: {
     name: "expectedAmount",
+    validation: [
+      (state) => {
+        if (
+          state?.data?.isExpectedAmount &&
+          (state?.data?.expectedAmount === undefined ||
+            state?.data?.expectedAmount === "")
+        ) {
+          return "Expected amount is mandatory";
+        }
+        return "";
+      },
+      (state) => {
+        if (
+          state?.data?.isExpectedAmount &&
+          Number(state?.data?.expectedAmount) < 0
+        ) {
+          return "Expected amount should be positive and greater than 0";
+        }
+        return "";
+      },
+    ],
     render: (state, onChange) => (
       <Input
         value={state.data?.expectedAmount}
@@ -65,49 +86,112 @@ const formInputs: FormData<IBudgetAllocation> = {
         disabled={!state.data?.isExpectedAmount}
         onChange={onChange}
         required
-        error={state?.errors?.expectedAmount}
+        error={state?.errors?.expectedAmount?.isError}
         errorText="Expected amount is mandatory"
       />
     ),
   },
   needs: {
     name: "percentages.needs",
+    validation: [
+      (state) =>
+        state?.data?.percentages.needs === 0
+          ? "Needs percentage is mandatory"
+          : "",
+      (state) => {
+        if (state?.data) {
+          const { needs, savings, wants } = state.data.percentages;
+          return needs + savings + wants > 100
+            ? "The percentage sum should not exceed 100"
+            : "";
+        }
+        return "";
+      },
+    ],
     render: (state, onChange) => (
       <StepperNumberInput
         name="percentages.needs"
         min={0}
         max={100}
+        error={state.errors?.percentages?.needs?.isError}
+        errorText={state.errors?.percentages?.needs?.errorMessage}
         onStepperInputChange={(value, e) => onChange(e, value)}
       />
     ),
   },
   wants: {
     name: "percentages.wants",
+    validation: [
+      (state) =>
+        state?.data?.percentages.wants === 0
+          ? "Wants percentage is mandatory"
+          : "",
+      (state) => {
+        if (state?.data) {
+          const { needs, savings, wants } = state.data.percentages;
+          return needs + savings + wants > 100
+            ? "The percentage sum should not exceed 100"
+            : "";
+        }
+        return "";
+      },
+    ],
     render: (state, onChange) => (
       <StepperNumberInput
         name="percentages.wants"
         min={0}
         max={100}
+        error={state.errors?.percentages?.wants?.isError}
+        errorText={state.errors?.percentages?.wants?.errorMessage}
         onStepperInputChange={(value, e) => onChange(e, value)}
       />
     ),
   },
   savings: {
     name: "percentages.savings",
+    validation: [
+      (state) =>
+        state?.data?.percentages.wants === 0
+          ? "Wants percentage is mandatory"
+          : "",
+      (state) => {
+        if (state?.data) {
+          const { needs, savings, wants } = state.data.percentages;
+          return needs + savings + wants > 100
+            ? "The percentage sum should not exceed 100"
+            : "";
+        }
+        return "";
+      },
+    ],
     render: (state, onChange) => (
       <StepperNumberInput
-        name="percentages.needs"
+        name="percentages.savings"
         min={0}
         max={100}
+        error={state.errors?.percentages?.savings?.isError}
+        errorText={state.errors?.percentages?.savings?.errorMessage}
         onStepperInputChange={(value, e) => onChange(e, value)}
       />
     ),
   },
 };
 
-const handleNext = () => {};
+const handleNext = (state, validation) => {
+  validation(
+    () => {
+      console.log("success");
+    },
+    () => {
+      console.log(error);
+    }
+  );
+};
 
-export const BudgetPercentageStep = () => {
+export const BudgetPercentageStep = ({ state }: { state: object }) => {
+  const { budgetDetails, budgetAllocation } = state;
+  const { recordedTotalIncome } = budgetAllocation;
+
   return (
     <Box sx={{ width: "100%", maxWidth: "750px", margin: "30px auto 0" }}>
       <Form
@@ -117,85 +201,107 @@ export const BudgetPercentageStep = () => {
           <FormActions<IBudgetAllocation>
             render={(formState, validation) => (
               <StepWizardActions
-                onNextClick={({ onNext }) =>
-                  handleNext(formState, validation, onNext)
-                }
+                onNextClick={() => handleNext(formState, validation)}
                 onPrevClick={({ onPrev }) => onPrev()}
               />
             )}
           />
         }
-        renderer={(formState, handleValueChange) => (
-          <>
-            <Typography>
-              {`Your total income for the selected budget dates is 2500`}
-            </Typography>
-            {formInputs.isExpectedAmount.render(formState, handleValueChange)}
-            {formInputs.expectedAmount.render(formState, handleValueChange)}
-            <Typography>
-              Allocate percentage of selected income you want to spend on each
-              of the following expense categories
-            </Typography>
-            <TableContainer component={Paper} sx={{ mt: "15px" }}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell align="center">Categories</TableCell>
-                    <TableCell align="center">Percentage</TableCell>
-                    <TableCell align="center">Total</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow
-                    key="needs"
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row" align="center">
-                      Needs
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      sx={{ display: "flex", justifyContent: "center" }}
+        renderer={(formState, handleValueChange) => {
+          const budgetAmount = formState.data?.isExpectedAmount
+            ? Number(formState.data?.expectedAmount)
+            : recordedTotalIncome;
+          const needsPercentage = formState.data?.percentages.needs
+            ? formState.data?.percentages.needs / 100
+            : 0;
+          const wantsPercentage = formState.data?.percentages.wants
+            ? formState.data?.percentages.wants / 100
+            : 0;
+          const savingsPercentage = formState.data?.percentages.savings
+            ? formState.data?.percentages.savings / 100
+            : 0;
+          return (
+            <>
+              <Typography>
+                {`Your total income for the selected budget dates is 2500`}
+              </Typography>
+              {formInputs.isExpectedAmount.render(formState, handleValueChange)}
+              {formInputs.expectedAmount.render(formState, handleValueChange)}
+              <Typography>
+                Allocate percentage of selected income you want to spend on each
+                of the following expense categories
+              </Typography>
+              <TableContainer component={Paper} sx={{ mt: "15px" }}>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell align="center">Categories</TableCell>
+                      <TableCell align="center">Percentage</TableCell>
+                      <TableCell align="center">Total</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    <TableRow
+                      key="needs"
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
-                      {formInputs.needs.render(formState, handleValueChange)}
-                    </TableCell>
-                    <TableCell align="center">100</TableCell>
-                  </TableRow>
-                  <TableRow
-                    key="needs"
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row" align="center">
-                      Wants
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      sx={{ display: "flex", justifyContent: "center" }}
+                      <TableCell component="th" scope="row" align="center">
+                        Needs
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{ display: "flex", justifyContent: "center" }}
+                      >
+                        {formInputs.needs.render(formState, handleValueChange)}
+                      </TableCell>
+                      <TableCell align="center">
+                        {Math.round(budgetAmount * needsPercentage * 100) / 100}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow
+                      key="needs"
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
-                      {formInputs.wants.render(formState, handleValueChange)}
-                    </TableCell>
-                    <TableCell align="center">100</TableCell>
-                  </TableRow>
-                  <TableRow
-                    key="needs"
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row" align="center">
-                      Savings
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      sx={{ display: "flex", justifyContent: "center" }}
+                      <TableCell component="th" scope="row" align="center">
+                        Wants
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{ display: "flex", justifyContent: "center" }}
+                      >
+                        {formInputs.wants.render(formState, handleValueChange)}
+                      </TableCell>
+                      <TableCell align="center">
+                        {Math.round(budgetAmount * wantsPercentage * 100) / 100}
+                      </TableCell>
+                    </TableRow>
+                    <TableRow
+                      key="needs"
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
-                      {formInputs.savings.render(formState, handleValueChange)}
-                    </TableCell>
-                    <TableCell align="center">100</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </>
-        )}
+                      <TableCell component="th" scope="row" align="center">
+                        Savings
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{ display: "flex", justifyContent: "center" }}
+                      >
+                        {formInputs.savings.render(
+                          formState,
+                          handleValueChange
+                        )}
+                      </TableCell>
+                      <TableCell align="center">
+                        {Math.round(budgetAmount * savingsPercentage * 100) /
+                          100}
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </>
+          );
+        }}
       ></Form>
     </Box>
   );

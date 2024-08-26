@@ -90,7 +90,10 @@ export const BudgetDetailsStep = ({ dispatch }: IBudgetDetailsProps) => {
   ) => {
     validation(
       () => {
-        dispatch({ budgetDetails: formState.data });
+        dispatch({
+          budgetDetails: formState.data,
+          budgetAllocation: { recordedTotalIncome: 1500 },
+        });
         onNext();
       },
       (errors) => {

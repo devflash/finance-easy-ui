@@ -8,7 +8,7 @@ type IFormProps<T> = {
     formState: FormState<T>,
     handleValueChange: (
       e: React.ChangeEvent<HTMLInputElement>,
-      v?: unknown
+      v?: number | undefined
     ) => void
   ) => JSX.Element;
   formActions?: JSX.Element;

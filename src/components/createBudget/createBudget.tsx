@@ -24,7 +24,7 @@ const getControls = (
     {
       key: "budget_allocation_percentage",
       stepLabel: "Budget Allocation (%)",
-      render: () => <BudgetPercentageStep />,
+      render: () => <BudgetPercentageStep state={state} />,
     },
   ];
   return steps;

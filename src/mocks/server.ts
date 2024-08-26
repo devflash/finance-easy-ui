@@ -14,7 +14,8 @@ export function makeServer(config: IConfig= {}) {
     environment, 
     models:{
       income: Model,
-      expense: Model
+      expense: Model,
+      budget: Model
     },
     
     routes() {
@@ -50,6 +51,12 @@ export function makeServer(config: IConfig= {}) {
         }
         )
       });
+
+      this.post('budgets/create', (schema, request)=>{
+        const body = JSON.parse(request.requestBody);
+        return schema.create('budget', body)
+      });
+      
       this.passthrough()
     },
     seeds(server) {
