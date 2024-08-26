@@ -25,7 +25,10 @@ const formState: FormState<IBudgetDetail> = {
 const formInputs: FormData<IBudgetDetail> = {
   budgetName: {
     name: "budgetName",
-    validation: (value) => value === "",
+    validation: [
+      (state) =>
+        state?.data?.budgetName === "" ? "Budget name is mandatory" : "",
+    ],
     render: (state, onChange) => (
       <Input
         value={state.data?.budgetName}
@@ -34,14 +37,17 @@ const formInputs: FormData<IBudgetDetail> = {
         subLabelText="Please enter a name for the budget"
         onChange={onChange}
         required
-        error={state?.errors?.budgetName}
-        errorText="Budget name is mandatory"
+        error={state?.errors?.budgetName?.isError}
+        errorText={state.errors?.budgetName?.errorMessage}
       />
     ),
   },
   startDate: {
     name: "startDate",
-    validation: (value) => value === "",
+    validation: [
+      (state) =>
+        state?.data?.startDate === "" ? "Start date is mandatory" : "",
+    ],
     render: (state, onChange) => (
       <Input
         name="startDate"
@@ -51,14 +57,16 @@ const formInputs: FormData<IBudgetDetail> = {
         type="date"
         onChange={onChange}
         required
-        error={state.errors?.startDate}
-        errorText="Start date is mandatory"
+        error={state.errors?.startDate?.isError}
+        errorText={state.errors?.startDate?.errorMessage}
       />
     ),
   },
   endDate: {
     name: "endDate",
-    validation: (value) => value === "",
+    validation: [
+      (state) => (state?.data?.endDate === "" ? "End date is mandatory" : ""),
+    ],
     render: (state, onChange) => (
       <Input
         name="endDate"
@@ -67,8 +75,8 @@ const formInputs: FormData<IBudgetDetail> = {
         subLabelText="Enter the ending date of the budget"
         type="date"
         required
-        error={state.errors?.endDate}
-        errorText="End date is mandatory"
+        error={state.errors?.endDate?.isError}
+        errorText={state.errors?.endDate?.errorMessage}
         onChange={onChange}
       />
     ),

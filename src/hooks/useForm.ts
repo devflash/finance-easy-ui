@@ -1,18 +1,19 @@
 import { useReducer } from "react";
-import _ from "lodash";
+import _, { isError } from "lodash";
 
 export type FormInput<T> = {
     name: string,
-    validation?: (value?: string ) => boolean
+    validation?: Array<(value?: FormState<T> ) => string>
     render: (state: FormState<T>, onChange: (e: React.ChangeEvent<HTMLInputElement>)=> void) => JSX.Element
 }
 
 export type FormData<T> = Record<string, FormInput<T>>
 
+type Error = {isError: boolean, errorMessage: string}
 
 export type Errors<T> = {
-  [K in keyof T]?: T[K] extends object ? Errors<T[K]> : boolean
-};
+  [K in keyof T]?: T[K] extends object ? Errors<T[K]> : Error
+}
 
 export type Data<T> = {
   [K in keyof T]: T[K]
@@ -64,11 +65,15 @@ export const useForm = <T>(formInputs: FormData<T>, initialState: FormState<T>) 
         const errors: Errors<T> = {};
         for(const input of Object.values(formInputs) as FormInput<T>[]){
             const key = input.name;
-            if(typeof input.validation === 'function'){
-                const isError = input.validation(_.get(formState.data, key as string))
-                if(isError){
-                    _.set(errors, key, isError)
+            if(Array.isArray(input.validation)){
+              for(const validateFn of input.validation){
+                const errorMessage = validateFn(formState)
+                if(errorMessage.length){
+                    _.set(errors, key, {isError: true, errorMessage})
+                    break;
                 }
+
+              }
             }
         }
         if (!Object.keys(errors).length) {
@@ -85,7 +90,7 @@ export const useForm = <T>(formInputs: FormData<T>, initialState: FormState<T>) 
         const val = type === 'checkbox' ? checked : value
         // dispatch({ type: "UPDATE_VALUES", payload: {[name]: value } as Data<T> });
         dispatch({ type: "UPDATE_VALUES", payload: _.set({}, name, val) as Data<T> });
-        dispatch({ type: "UPDATE_ERROR", payload: _.set({}, name, false) as Errors<T> });
+        dispatch({ type: "UPDATE_ERROR", payload: _.set({}, name, {isError: false, errorMessage: ''}) });
       };
 
       return {formState, validation, handleValueChange}

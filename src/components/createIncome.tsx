@@ -29,7 +29,9 @@ const initialState: FormState<IncomeData> = {
 const formData: FormData<IncomeData> = {
   source: {
     name: "source",
-    validation: (value) => value === "",
+    validation: [
+      (state) => (state?.data?.source === "" ? "Source is mandatory" : ""),
+    ],
     render: (state, onChange) => (
       <Input
         value={state.data?.source}
@@ -38,15 +40,19 @@ const formData: FormData<IncomeData> = {
         subLabelText="Please enter the source name from where the income is received"
         onChange={onChange}
         required
-        error={state?.errors?.source}
-        errorText={"Source is mandatory"}
+        error={state?.errors?.source?.isError}
+        errorText={state?.errors?.source?.errorMessage}
       />
     ),
   },
 
   amount: {
     name: "amount",
-    validation: (value) => value === "",
+    validation: [
+      (state) => (state?.data?.amount === "" ? "Amount is mandatory" : ""),
+      (state) =>
+        Number(state?.data?.amount) < 0 ? "Amount should be positive" : "",
+    ],
     render: (state, onChange) => (
       <Input
         value={state.data?.amount}
@@ -56,14 +62,17 @@ const formData: FormData<IncomeData> = {
         type="number"
         onChange={onChange}
         required
-        error={state?.errors?.amount}
-        errorText={"Amount is mandatory"}
+        error={state?.errors?.amount?.isError}
+        errorText={state?.errors?.amount?.errorMessage}
       />
     ),
   },
   depositType: {
     name: "depositType",
-    validation: (value) => value === "",
+    validation: [
+      (state) =>
+        state?.data?.depositType === "" ? "Deposite type is mandatory" : "",
+    ],
     render: (state, onChange) => (
       <Select
         name="depositType"
@@ -75,15 +84,17 @@ const formData: FormData<IncomeData> = {
           { label: "Bank account", value: "bankAccount" },
         ]}
         required
-        error={state?.errors?.depositType}
-        errorText={"Deposite type is mandatory"}
+        error={state?.errors?.depositType?.isError}
+        errorText={state?.errors?.depositType?.errorMessage}
         onChange={onChange}
       />
     ),
   },
   category: {
     name: "category",
-    validation: (value) => value === "",
+    validation: [
+      (state) => (state?.data?.category === "" ? "Category is mandatory" : ""),
+    ],
     render: (state, onChange) => (
       <Select
         name="category"
@@ -93,8 +104,8 @@ const formData: FormData<IncomeData> = {
         options={[{ label: "Salary", value: "salary" }]}
         onChange={onChange}
         required
-        error={state?.errors?.category}
-        errorText={"Category is mandatory"}
+        error={state?.errors?.category?.isError}
+        errorText={state?.errors?.category?.errorMessage}
       />
     ),
   },
@@ -115,7 +126,10 @@ const formData: FormData<IncomeData> = {
   },
   incomeDate: {
     name: "incomeDate",
-    validation: (value) => value === "",
+    validation: [
+      (state) =>
+        state?.data?.incomeDate === "" ? "Income date is mandatory" : "",
+    ],
     render: (state, onChange) => (
       <Input
         name="incomeDate"
@@ -124,8 +138,8 @@ const formData: FormData<IncomeData> = {
         subLabelText="Please select the date when the income is received"
         type="date"
         required
-        error={state?.errors?.incomeDate}
-        errorText={"Income date is mandatory"}
+        error={state?.errors?.incomeDate?.isError}
+        errorText={state?.errors?.incomeDate?.errorMessage}
         onChange={onChange}
       />
     ),
