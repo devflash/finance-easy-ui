@@ -4,7 +4,13 @@ import Box from "@mui/material/Box";
 type IFormProps<T> = {
   formInputs: FormData<T>;
   state: FormState<T>;
-  children?: JSX.Element;
+  renderer?: (
+    formState: FormState<T>,
+    handleValueChange: (
+      e: React.ChangeEvent<HTMLInputElement>,
+      v?: unknown
+    ) => void
+  ) => JSX.Element;
   formActions?: JSX.Element;
 };
 
@@ -28,7 +34,7 @@ export const FormContext = createContext<IFormContext<unknown>>({
 export const Form = <T,>({
   formInputs,
   state,
-  children,
+  renderer,
   formActions,
 }: IFormProps<T>) => {
   const form = useForm(formInputs, state);
@@ -36,8 +42,8 @@ export const Form = <T,>({
   return (
     <FormContext.Provider value={form}>
       <Box>
-        {children
-          ? children
+        {renderer
+          ? renderer(formState, handleValueChange)
           : Object.values(formInputs).map((input) =>
               input.render(formState, handleValueChange)
             )}

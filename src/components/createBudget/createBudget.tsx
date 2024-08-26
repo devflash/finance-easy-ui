@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { StepWizard, IStep } from "../common/stepWizard/stepWizard";
 import { BudgetDetailsStep } from "./budgetDetailsStep";
-
+import { BudgetPercentageStep } from "./budgetPercentageStep";
 const initialState = {
   budgetDetails: {},
   budgetAllocation: {},
@@ -22,9 +22,9 @@ const getControls = (
       render: () => <BudgetDetailsStep dispatch={dispatch} />,
     },
     {
-      key: "budget_allocation",
-      stepLabel: "Budget Allocation",
-      render: () => <p>Budget Allocation step</p>,
+      key: "budget_allocation_percentage",
+      stepLabel: "Budget Allocation (%)",
+      render: () => <BudgetPercentageStep />,
     },
   ];
   return steps;

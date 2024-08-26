@@ -30,8 +30,8 @@ export const StepWizard = ({ steps }: IStepWizardProps) => {
   return (
     <Box sx={{ width: "100%" }}>
       <Stepper activeStep={activeStep}>
-        {steps.map((step) => (
-          <Step key={step.key} completed>
+        {steps.map((step, index) => (
+          <Step key={step.key} completed={index < activeStep}>
             <StepLabel>{step.stepLabel}</StepLabel>
           </Step>
         ))}

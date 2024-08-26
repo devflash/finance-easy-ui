@@ -79,11 +79,12 @@ export const useForm = <T>(formInputs: FormData<T>, initialState: FormState<T>) 
         }
       };
 
-      const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>, v?: unknown ) => {
+        const {type, value, checked} = e.target
         const name = e.target.name as keyof T
-        const value = e.target.value
+        const val = type === 'checkbox' ? checked : value
         // dispatch({ type: "UPDATE_VALUES", payload: {[name]: value } as Data<T> });
-        dispatch({ type: "UPDATE_VALUES", payload: _.set({}, name, value) as Data<T> });
+        dispatch({ type: "UPDATE_VALUES", payload: _.set({}, name, val) as Data<T> });
         dispatch({ type: "UPDATE_ERROR", payload: _.set({}, name, false) as Errors<T> });
       };
 

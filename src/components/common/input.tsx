@@ -9,7 +9,7 @@ import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 
 export type InputProps = TextFieldProps & {
   subLabelText?: string;
-  label: string;
+  label?: string;
   errorText?: string;
 };
 
@@ -78,20 +78,23 @@ export const Input = ({
 }: InputProps) => {
   return (
     <FormRow fullWidth>
-      <Label shrink htmlFor={id} sx={{ color: "#000000" }}>
-        <Typography component="p" sx={{ display: "flex" }}>
-          {label}
-          {required && <Typography>*</Typography>}
-        </Typography>
-        {subLabelText && (
-          <Typography
-            component="p"
-            sx={{ color: "#A29E9E", fontSize: "0.7rem" }}
-          >
-            {subLabelText}
+      {label ? (
+        <Label shrink htmlFor={id} sx={{ color: "#000000" }}>
+          <Typography component="p" sx={{ display: "flex" }}>
+            {label}
+            {required && <Typography>*</Typography>}
           </Typography>
-        )}
-      </Label>
+          {subLabelText && (
+            <Typography
+              component="p"
+              sx={{ color: "#A29E9E", fontSize: "0.7rem" }}
+            >
+              {subLabelText}
+            </Typography>
+          )}
+        </Label>
+      ) : null}
+
       <InputWrapper>
         <InputField
           id={id}
