@@ -4,9 +4,10 @@ import { FormData, FormState } from "../../hooks/useForm";
 import { StepWizardActions } from "../common/stepWizard/stepWizardActions";
 import { Input } from "../common/input";
 import { FormActions } from "../common/formActions";
+import { BudgetState } from "./createBudget";
 
 type IBudgetDetailsProps = {
-  dispatch: React.Dispatch<unknown>;
+  dispatch: React.Dispatch<BudgetState>;
 };
 type IBudgetDetail = {
   budgetName: string;
@@ -90,11 +91,13 @@ export const BudgetDetailsStep = ({ dispatch }: IBudgetDetailsProps) => {
   ) => {
     validation(
       () => {
-        dispatch({
-          budgetDetails: formState.data,
-          budgetAllocation: { recordedTotalIncome: 1500 },
-        });
-        onNext();
+        if (formState.data) {
+          dispatch({
+            budgetDetails: formState.data,
+            budgetAllocation: {},
+          });
+          onNext();
+        }
       },
       (errors) => {
         console.log(errors);

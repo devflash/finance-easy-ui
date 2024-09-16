@@ -90,7 +90,6 @@ export const useForm = <T>(formInputs: FormData<T>, initialState: FormState<T>) 
       };
 
       const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>, v?: number | undefined ) => {
-        debugger
         const {type, value, checked} = e.target
         const name = e.target.name as keyof T
         let val: string | number | boolean

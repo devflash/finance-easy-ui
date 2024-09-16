@@ -6,11 +6,15 @@ import { StepWizard, IStep } from "../common/stepWizard/stepWizard";
 import { BudgetDetailsStep } from "./budgetDetailsStep";
 import { BudgetPercentageStep } from "./budgetPercentageStep";
 const initialState = {
-  budgetDetails: {},
+  budgetDetails: {
+    startDate: "",
+    endDate: "",
+    budgetName: "",
+  },
   budgetAllocation: {},
 };
 
-type BudgetState = typeof initialState;
+export type BudgetState = typeof initialState;
 const getControls = (
   state: BudgetState,
   dispatch: React.Dispatch<BudgetState>

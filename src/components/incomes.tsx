@@ -5,6 +5,8 @@ import { IIncome } from "../utils/types";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useSearchIncomes } from "../hooks/useSearchIncomes";
+import { useSearchParams } from "react-router-dom";
+
 const columns: Column<IIncome>[] = [
   {
     id: "source",
@@ -50,7 +52,9 @@ const columns: Column<IIncome>[] = [
 ];
 
 export const Incomes = () => {
-  const { data } = useSearchIncomes();
+  const [searchParams] = useSearchParams();
+
+  const { data } = useSearchIncomes(searchParams);
 
   if (!data?.length) {
     return <p>No incomes</p>;

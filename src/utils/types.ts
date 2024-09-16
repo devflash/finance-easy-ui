@@ -18,14 +18,15 @@ export type IncomeData = Record<
 
 export type IBudget = {
   _id: string
-  budgetDetail: {
+  budgetDetails: {
     budgetName: string
     startDate: Date,
     endDate: Date,
   }
   budgetAllocation: {
     isExpectedAmount: boolean
-    availableBudgetAmount: number
+    availableBudgetAmount: number,
+    expectedAmount: number
     percentages: {
       needs: number,
       wants: number,
@@ -35,3 +36,9 @@ export type IBudget = {
   createdAt: Date;
   updateAt: Date;
 }
+
+type ConvertToString<T> = {
+  [K in keyof T]: T[K] extends Date ? string : T[K] extends object ? ConvertToString<T[K]> : T[K]
+}
+
+export type BudgetData = ConvertToString<Omit<IBudget, '_id' | 'createdAt' | 'updateAt'>> 

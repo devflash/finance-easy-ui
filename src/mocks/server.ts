@@ -34,6 +34,8 @@ export function makeServer(config: IConfig= {}) {
       this.get("incomes/search", (schema, request) => {
         const source = request.queryParams.source
         const category = request.queryParams.category
+        const startDate = request.queryParams.startDate
+        const endDate = request.queryParams.endDate
         return schema.all('income').filter((value)=> {
           if(source && category){
             return value.attrs.source === source && value.attrs.category === category
@@ -44,6 +46,9 @@ export function makeServer(config: IConfig= {}) {
           }
           else if(category){
             return value.attrs.category === category
+          }
+          else if(startDate && endDate){
+            return value.attrs.incomeDate >=startDate && value.attrs.incomeDate <= endDate
           }
           else{
             return true

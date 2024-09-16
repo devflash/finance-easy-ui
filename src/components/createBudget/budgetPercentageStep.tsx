@@ -3,9 +3,10 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Typography from "@mui/material/Typography";
 import { FormState, FormData } from "../../hooks/useForm";
-import { Input } from "../common/input";
+
+import { InputNum } from "../common/inputNumber";
 import { StepperNumberInput } from "../common/stepNumberInput";
-import { Form } from "../common/form";
+import { Form, IFormContext } from "../common/form";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -15,6 +16,12 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { FormActions } from "../common/formActions";
 import { StepWizardActions } from "../common/stepWizard/stepWizardActions";
+import { useSearchIncomes } from "../../hooks/useSearchIncomes";
+import { useMutation } from "@tanstack/react-query";
+import { createBudget } from "../../services/budgetService";
+import { useNavigate } from "react-router-dom";
+import { BudgetData } from "../../utils/types";
+import { BudgetState } from "./createBudget";
 type IBudgetAllocation = {
   isExpectedAmount: boolean;
   expectedAmount: string;
@@ -78,7 +85,7 @@ const formInputs: FormData<IBudgetAllocation> = {
       },
     ],
     render: (state, onChange) => (
-      <Input
+      <InputNum
         value={state.data?.expectedAmount}
         name="expectedAmount"
         label="Expected Amount"
@@ -177,20 +184,47 @@ const formInputs: FormData<IBudgetAllocation> = {
   },
 };
 
-const handleNext = (state, validation) => {
-  validation(
-    () => {
-      console.log("success");
+export const BudgetPercentageStep = ({ state }: { state: BudgetState }) => {
+  const navigate = useNavigate();
+  const mutation = useMutation({
+    mutationFn: createBudget,
+    onSuccess: () => {
+      navigate("/budgets");
     },
-    () => {
-      console.log(error);
-    }
-  );
-};
+  });
 
-export const BudgetPercentageStep = ({ state }: { state: object }) => {
-  const { budgetDetails, budgetAllocation } = state;
-  const { recordedTotalIncome } = budgetAllocation;
+  const { budgetDetails } = state;
+  const { startDate, endDate } = budgetDetails;
+  const { data } = useSearchIncomes({ startDate, endDate });
+  const totalIncome = data?.reduce((total, income) => total + income.amount, 0);
+
+  const handleNext = (
+    formState: IFormContext<IBudgetAllocation>["formState"],
+    validation: IFormContext<IBudgetAllocation>["validation"]
+  ) => {
+    validation(
+      () => {
+        const budgetAmount = formState.data?.isExpectedAmount
+          ? Number(formState.data?.expectedAmount)
+          : totalIncome;
+        const availableBudgetAmount = budgetAmount || 0;
+        if (formState.data) {
+          const payload: BudgetData = {
+            budgetAllocation: {
+              ...formState.data,
+              expectedAmount: Number(formState.data.expectedAmount),
+              availableBudgetAmount,
+            },
+            budgetDetails,
+          };
+          mutation.mutate(payload);
+        }
+      },
+      () => {
+        console.log(error);
+      }
+    );
+  };
 
   return (
     <Box sx={{ width: "100%", maxWidth: "750px", margin: "30px auto 0" }}>
@@ -210,16 +244,21 @@ export const BudgetPercentageStep = ({ state }: { state: object }) => {
         renderer={(formState, handleValueChange) => {
           const budgetAmount = formState.data?.isExpectedAmount
             ? Number(formState.data?.expectedAmount)
-            : recordedTotalIncome;
+            : totalIncome;
+          const availableBudgetAmount = budgetAmount || 0;
+
           const needsPercentage = formState.data?.percentages.needs
             ? formState.data?.percentages.needs / 100
             : 0;
+
           const wantsPercentage = formState.data?.percentages.wants
             ? formState.data?.percentages.wants / 100
             : 0;
+
           const savingsPercentage = formState.data?.percentages.savings
             ? formState.data?.percentages.savings / 100
             : 0;
+
           return (
             <>
               <Typography>
@@ -255,7 +294,9 @@ export const BudgetPercentageStep = ({ state }: { state: object }) => {
                         {formInputs.needs.render(formState, handleValueChange)}
                       </TableCell>
                       <TableCell align="center">
-                        {Math.round(budgetAmount * needsPercentage * 100) / 100}
+                        {Math.round(
+                          availableBudgetAmount * needsPercentage * 100
+                        ) / 100}
                       </TableCell>
                     </TableRow>
                     <TableRow
@@ -272,7 +313,9 @@ export const BudgetPercentageStep = ({ state }: { state: object }) => {
                         {formInputs.wants.render(formState, handleValueChange)}
                       </TableCell>
                       <TableCell align="center">
-                        {Math.round(budgetAmount * wantsPercentage * 100) / 100}
+                        {Math.round(
+                          availableBudgetAmount * wantsPercentage * 100
+                        ) / 100}
                       </TableCell>
                     </TableRow>
                     <TableRow
@@ -292,8 +335,9 @@ export const BudgetPercentageStep = ({ state }: { state: object }) => {
                         )}
                       </TableCell>
                       <TableCell align="center">
-                        {Math.round(budgetAmount * savingsPercentage * 100) /
-                          100}
+                        {Math.round(
+                          availableBudgetAmount * savingsPercentage * 100
+                        ) / 100}
                       </TableCell>
                     </TableRow>
                   </TableBody>
