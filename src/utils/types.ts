@@ -32,7 +32,8 @@ export type IBudget = {
       wants: number,
       savings: number
     }
-  }
+  },
+  status: string;
   createdAt: Date;
   updateAt: Date;
 }
@@ -41,4 +42,4 @@ type ConvertToString<T> = {
   [K in keyof T]: T[K] extends Date ? string : T[K] extends object ? ConvertToString<T[K]> : T[K]
 }
 
-export type BudgetData = ConvertToString<Omit<IBudget, '_id' | 'createdAt' | 'updateAt'>> 
+export type BudgetData = ConvertToString<Omit<IBudget, '_id' | 'createdAt' | 'updateAt' | 'status'>> 

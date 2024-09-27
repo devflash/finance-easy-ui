@@ -61,6 +61,10 @@ export function makeServer(config: IConfig= {}) {
         const body = JSON.parse(request.requestBody);
         return schema.create('budget', body)
       });
+
+      this.get('budgets/all', (schema)=>{
+        return schema.all('budget')
+      });
       
       this.passthrough()
     },

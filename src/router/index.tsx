@@ -3,7 +3,7 @@ import { Home } from "../pages/home.tsx";
 import { IncomePage } from "../pages/income.tsx";
 import { ExpensePage } from "../pages/expense.tsx";
 import { CreatePage } from "../pages/create.tsx";
-import { BudgetPage } from "../pages/budget.tsx";
+import { BudgetsPage } from "../pages/budgetsPage";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -19,7 +19,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "budgets",
-        element: <BudgetPage />,
+        element: <BudgetsPage />,
       },
       {
         path: "/income/create",
