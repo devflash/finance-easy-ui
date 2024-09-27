@@ -4,7 +4,12 @@ import { IncomePage } from "../pages/income.tsx";
 import { ExpensePage } from "../pages/expense.tsx";
 import { CreatePage } from "../pages/create.tsx";
 import { BudgetsPage } from "../pages/budgetsPage";
+import { LoginPage } from "../pages/loginPage.tsx";
 export const router = createBrowserRouter([
+  {
+    path: "/login",
+    element: <LoginPage />,
+  },
   {
     path: "/",
     element: <Home />,
