@@ -43,3 +43,10 @@ type ConvertToString<T> = {
 }
 
 export type BudgetData = ConvertToString<Omit<IBudget, '_id' | 'createdAt' | 'updateAt' | 'status'>> 
+
+export type UserSignup = {
+  firstName: string,
+  lastName: string,
+  email: string,
+  password: string
+}

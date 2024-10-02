@@ -15,7 +15,8 @@ export function makeServer(config: IConfig= {}) {
     models:{
       income: Model,
       expense: Model,
-      budget: Model
+      budget: Model,
+      user: Model
     },
     
     routes() {
@@ -66,6 +67,11 @@ export function makeServer(config: IConfig= {}) {
         return schema.all('budget')
       });
       
+      this.post('user/register', (schema, request)=>{
+        const body = JSON.parse(request.requestBody);
+        return schema.create('user', body)
+      });
+
       this.passthrough()
     },
     seeds(server) {
