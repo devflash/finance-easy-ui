@@ -5,8 +5,21 @@ import { IIncome } from "../utils/types";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useSearchIncomes } from "../hooks/useSearchIncomes";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
+const IncomeActions = ({ incomeId }: { incomeId: string }) => {
+  const navigate = useNavigate();
+  return (
+    <Box>
+      <Button onClick={() => navigate(`/income/update/${incomeId}`)}>
+        <EditIcon />
+      </Button>
+      <Button>
+        <DeleteIcon />
+      </Button>
+    </Box>
+  );
+};
 const columns: Column<IIncome>[] = [
   {
     id: "source",
@@ -38,16 +51,7 @@ const columns: Column<IIncome>[] = [
   {
     id: "actions",
     label: "Actions",
-    render: () => (
-      <Box>
-        <Button>
-          <EditIcon />
-        </Button>
-        <Button>
-          <DeleteIcon />
-        </Button>
-      </Box>
-    ),
+    render: (income) => <IncomeActions incomeId={income._id} />,
   },
 ];
 

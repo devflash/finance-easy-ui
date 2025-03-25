@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-nocheck
-import { createServer, Model } from "miragejs";
+import { createServer, Model, Response } from "miragejs";
 import incomes from './jsons/incomes.json'
 
 type IConfig = {
@@ -10,7 +10,7 @@ type IConfig = {
 export function makeServer(config: IConfig= {}) {
   const {environment='development'} = config
 
-  return createServer({
+   return createServer({
     environment, 
     models:{
       income: Model,
@@ -26,10 +26,23 @@ export function makeServer(config: IConfig= {}) {
       this.get("incomes/all", (schema) => {
         return schema.all('income')
       });
+
+      this.get("incomes/:incomeId", (schema, request)=>{
+        const incomeId = request.params.incomeId;
+        const income = schema.db.incomes.where({_id: incomeId})[0]
+        return new Response(200, undefined, {income})
+      })
       
       this.post('incomes/create', (schema, request)=>{
         const body = JSON.parse(request.requestBody);
         return schema.create('income', body)
+      });
+
+      this.put('incomes/:incomeId', (schema, request)=>{
+        const body = JSON.parse(request.requestBody);
+        const incomeId = request.params.incomeId;
+
+        return schema.where('income', {_id: incomeId}).update(body)
       });
 
       this.get("incomes/search", (schema, request) => {

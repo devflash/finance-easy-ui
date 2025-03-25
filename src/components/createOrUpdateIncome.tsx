@@ -4,26 +4,39 @@ import Box from "@mui/material/Box";
 import { Input } from "./common/input";
 import { Select } from "./common/select";
 import { FormActions } from "./common/formActions";
-import { useMutation } from "@tanstack/react-query";
-import { createIncomes } from "../services/incomeService";
+import { useMutation, UseMutationResult } from "@tanstack/react-query";
+import { createIncomes, updateIncomes } from "../services/incomeService";
 import { useNavigate } from "react-router-dom";
 import { FormData, FormState } from "../hooks/useForm";
-import { IncomeData } from "../utils/types";
+import { IIncome, IncomeData } from "../utils/types";
 import { Form, IFormContext } from "./common/form";
-type CreateIncomeProps = {
-  action: "create" | "edit";
-};
+import { useGetIncomeById } from "../hooks/useGetIncomeById";
+import { useParams } from "react-router-dom";
 
-const initialState: FormState<IncomeData> = {
-  data: {
-    amount: "",
-    category: "",
-    depositType: "",
-    description: "",
-    incomeDate: "",
-    source: "",
-  },
-  errors: {},
+type CreateIncomeProps = { action: "CREATE" | "UPDATE" };
+
+type IncomeFormProps = {
+  initialState: FormState<IncomeData>;
+  action: CreateIncomeProps["action"];
+  mutationFn: (
+    payload: { income: IncomeData } | { income: IncomeData; incomeId: string }
+  ) => Promise<IIncome>;
+  onFormConfirm: (
+    formState: IFormContext<IncomeData>["formState"],
+    validation: IFormContext<IncomeData>["validation"],
+    mutation: UseMutationResult<
+      IIncome,
+      Error,
+      | {
+          income: IncomeData;
+        }
+      | {
+          income: IncomeData;
+          incomeId: string;
+        },
+      unknown
+    >
+  ) => void;
 };
 
 const formData: FormData<IncomeData> = {
@@ -146,22 +159,96 @@ const formData: FormData<IncomeData> = {
   },
 };
 
-export const CreateIncome = ({ action }: CreateIncomeProps) => {
-  const navigate = useNavigate();
-  const mutation = useMutation({
-    mutationFn: createIncomes,
-    onSuccess: () => {
-      navigate("/incomes");
+export const CreateOrUpdateIncome = ({ action }: CreateIncomeProps) => {
+  return action === "CREATE" ? <CreateIncome /> : <UpdateIncome />;
+};
+
+const CreateIncome = () => {
+  const initialState = {
+    data: {
+      amount: "",
+      category: "",
+      depositType: "",
+      description: "",
+      incomeDate: "",
+      source: "",
     },
-  });
+    errors: {},
+  };
 
   const createIncomeHandler = (
     formState: IFormContext<IncomeData>["formState"],
-    validation: IFormContext<IncomeData>["validation"]
+    validation: IFormContext<IncomeData>["validation"],
+    mutation: UseMutationResult<
+      IIncome,
+      Error,
+      | {
+          income: IncomeData;
+        }
+      | {
+          income: IncomeData;
+          incomeId: string;
+        },
+      unknown
+    >
   ) => {
     validation(
       () => {
-        if (formState.data) mutation.mutate(formState.data);
+        if (formState.data) mutation.mutate({ income: formState.data });
+      },
+      (errors) => {
+        console.log("errors", errors);
+      }
+    );
+  };
+  return (
+    <IncomeForm
+      initialState={initialState}
+      action="CREATE"
+      mutationFn={createIncomes}
+      onFormConfirm={createIncomeHandler}
+    />
+  );
+};
+
+const UpdateIncome = () => {
+  const { incomeId } = useParams();
+  const { data, isLoading } = useGetIncomeById(incomeId ? incomeId : "");
+  console.log(data);
+  const initialState = {
+    data: {
+      source: data?.source || "",
+      amount: String(data?.amount) || "",
+      category: data?.category || "",
+      depositType: data?.depositType || "",
+      description: data?.description || "",
+      incomeDate: data?.incomeDate
+        ? new Date(data.incomeDate).toISOString().split("T")[0]
+        : "",
+    },
+    errors: {},
+  };
+
+  const updateIncomeHandler = (
+    formState: IFormContext<IncomeData>["formState"],
+    validation: IFormContext<IncomeData>["validation"],
+    mutation: UseMutationResult<
+      IIncome,
+      Error,
+      | {
+          income: IncomeData;
+        }
+      | {
+          income: IncomeData;
+          incomeId: string;
+        },
+      unknown
+    >
+  ) => {
+    validation(
+      () => {
+        if (formState.data)
+          mutation.mutate({ income: formState.data, incomeId });
       },
       (errors) => {
         console.log("errors", errors);
@@ -169,12 +256,44 @@ export const CreateIncome = ({ action }: CreateIncomeProps) => {
     );
   };
 
+  if (isLoading) {
+    return <p>Loading.....</p>;
+  }
+  if (!data) {
+    return <p>{`No income with id ${incomeId} available`}</p>;
+  }
+
+  return (
+    <IncomeForm
+      initialState={initialState}
+      action="UPDATE"
+      mutationFn={updateIncomes}
+      onFormConfirm={updateIncomeHandler}
+    />
+  );
+};
+
+const IncomeForm = ({
+  initialState,
+  action,
+  mutationFn,
+  onFormConfirm,
+}: IncomeFormProps) => {
+  const navigate = useNavigate();
+
+  const mutation = useMutation({
+    mutationFn: mutationFn,
+    onSuccess: () => {
+      navigate("/incomes");
+    },
+  });
+
   const cancelHandler = () => navigate("/incomes");
 
   return (
     <Paper sx={{ padding: "20px", borderRadius: "10px" }}>
       <Typography variant="h1" sx={{ fontSize: "2rem" }}>
-        Add new Income
+        {action === "CREATE" ? "Add new Income" : "Update Income"}
       </Typography>
       <Typography variant="subtitle2" sx={{ color: "#A29E9E" }}>
         Please provide the details about the income
@@ -186,7 +305,9 @@ export const CreateIncome = ({ action }: CreateIncomeProps) => {
           formActions={
             <FormActions<IncomeData>
               submitBtnLabel="Create Income"
-              submitBtnClick={createIncomeHandler}
+              submitBtnClick={(formState, validation) =>
+                onFormConfirm(formState, validation, mutation)
+              }
               cancelBtnClick={cancelHandler}
             />
           }

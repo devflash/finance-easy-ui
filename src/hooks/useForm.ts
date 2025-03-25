@@ -74,7 +74,7 @@ export const useForm = <T>(formInputs: FormData<T>, initialState: FormState<T>) 
                     _.set(errors, key, {isError: true, errorMessage})
                     break;
                 }else{
-                    isError = false
+                    // isError = false
                   _.set(errors, key, {isError: false, errorMessage: ''})
                 }
 
