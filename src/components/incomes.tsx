@@ -6,6 +6,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useSearchIncomes } from "../hooks/useSearchIncomes";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { Filters } from "./Filters";
 
 const IncomeActions = ({ incomeId }: { incomeId: string }) => {
   const navigate = useNavigate();
@@ -63,9 +64,11 @@ export const Incomes = () => {
   if (!data?.length) {
     return <p>No incomes</p>;
   }
+  console.log(searchParams);
 
   return (
     <Box sx={{ width: "100%" }}>
+      <Filters filtersString={searchParams} />
       <Table data={data} columns={columns} />
     </Box>
   );
