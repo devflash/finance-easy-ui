@@ -6,7 +6,12 @@ export const Filters = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const filters =
-    searchParams.size > 0 ? searchParams.toString()?.split("&") : [];
+    searchParams.size > 0
+      ? searchParams
+          .toString()
+          ?.split("&")
+          .filter((f) => !f.includes("page"))
+      : [];
 
   const handleDelete = (value: string) => {
     const query: { [key: string]: string } = {};

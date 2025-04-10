@@ -1,12 +1,15 @@
 import { Table, Column } from "./common/Table";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Pagination from "@mui/material/Pagination";
 import { IIncome } from "../utils/types";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+
 import { useSearchIncomes } from "../hooks/useSearchIncomes";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { Filters } from "./Filters";
+import { PAGE_LIMIT } from "../utils/util";
 
 const IncomeActions = ({ incomeId }: { incomeId: string }) => {
   const navigate = useNavigate();
@@ -57,19 +60,37 @@ const columns: Column<IIncome>[] = [
 ];
 
 export const Incomes = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { data } = useSearchIncomes(searchParams);
 
   if (!data?.length) {
     return <p>No incomes</p>;
   }
-  console.log(searchParams);
+
+  const totalPages = data.length / PAGE_LIMIT;
+  const currentPage = searchParams.has("page")
+    ? Number(searchParams.get("page"))
+    : 1;
+
+  const handlePagination = (_: unknown, page: number) => {
+    searchParams.set("page", page.toString());
+    setSearchParams(searchParams);
+  };
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Filters filtersString={searchParams} />
+      <Filters />
       <Table data={data} columns={columns} />
+      {totalPages > 1 && (
+        <Pagination
+          sx={{ mt: "1rem" }}
+          count={totalPages}
+          page={currentPage}
+          color="primary"
+          onChange={handlePagination}
+        />
+      )}
     </Box>
   );
 };
