@@ -11,6 +11,19 @@ export interface IIncome{
     updateAt: Date;
 }
 
+export type IExpense = {
+  _id: string
+  category: string,
+  moneyPaidTo: string,
+  paymentMethod: string,
+  amount: number,
+  expenseDate: Date,
+  description: string,
+  userId: string,
+  createdAt: Date;
+  updateAt: Date;
+}
+
 export type IncomeData = Record<
   keyof Omit<IIncome, "_id" | "userId" | "createdAt" | "updateAt">,
   string

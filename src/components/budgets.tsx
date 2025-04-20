@@ -1,4 +1,4 @@
-import { Table, Column } from "./common/Table";
+import { Table, Column } from "./common/table/Table";
 import Box from "@mui/material/Box";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";

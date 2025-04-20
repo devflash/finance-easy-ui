@@ -2,6 +2,7 @@
 //@ts-nocheck
 import { createServer, Model, Response } from "miragejs";
 import incomes from './jsons/incomes.json'
+import expenses from './jsons/expenses.json'
 
 type IConfig = {
   environment?: string
@@ -84,12 +85,43 @@ export function makeServer(config: IConfig= {}) {
         const body = JSON.parse(request.requestBody);
         return schema.create('user', body)
       });
+      
+      this.get("expenses/all", (schema) => {
+        return schema.all('expenses')
+      });
+
+      this.get("expenses/search", (schema, request) => {
+        const source = request.queryParams.source
+        const category = request.queryParams.category
+        const startDate = request.queryParams.startDate
+        const endDate = request.queryParams.endDate
+        return schema.all('expense').filter((value)=> {
+          if(source && category){
+            return value.attrs.source === source && value.attrs.category === category
+
+          }
+          else if(source){
+            return value.attrs.source === source
+          }
+          else if(category){
+            return value.attrs.category === category
+          }
+          else if(startDate && endDate){
+            return value.attrs.incomeDate >=startDate && value.attrs.incomeDate <= endDate
+          }
+          else{
+            return true
+          }
+        }
+        )
+      });
 
       this.passthrough()
     },
     seeds(server) {
       server.db.loadData({
-        incomes
+        incomes,
+        expenses
       })
     },
   });

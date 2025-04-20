@@ -1,0 +1,28 @@
+[
+    {
+        "_id": "6804d0106c63cca9283a177c",
+        "category": "Hotel",
+        "moneyPaidTo": "A",
+        "paymentMethod": "Bank",
+        "amount": 2500,
+        "expenseDate": "2024-01-01T00:00:00.000Z",
+        "description": "test",
+        "userId": "66a3c726073457997df9859a",
+        "createdAt": "2025-04-20T10:44:32.923Z",
+        "updatedAt": "2025-04-20T10:44:32.923Z",
+        "__v": 0
+    },
+    {
+        "_id": "6804d0106c63cca9283a177d",
+        "category": "Grocery",
+        "moneyPaidTo": "B",
+        "paymentMethod": "Credit card",
+        "amount": 1500,
+        "expenseDate": "2024-02-01T00:00:00.000Z",
+        "description": "test",
+        "userId": "66a3c726073457997df9859a",
+        "createdAt": "2025-04-20T10:44:32.923Z",
+        "updatedAt": "2025-04-20T10:44:32.923Z",
+        "__v": 0
+    }
+]
