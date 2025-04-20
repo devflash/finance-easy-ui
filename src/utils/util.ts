@@ -26,4 +26,4 @@ export function isStrongPassword(password?:string) {
     return password ? testUpper(password) && testLower(password) && testDigit(password) && testSpecial(password) && password.length >= 8 : false;
 }
 
-export const PAGE_LIMIT= 1
+export const PAGE_LIMIT= 5

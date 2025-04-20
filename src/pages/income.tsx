@@ -4,10 +4,10 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import { Incomes } from "../components/incomes";
+import { Incomes } from "../components/income/incomes";
 import { useNavigate } from "react-router-dom";
 import { useGlobalState } from "../hooks/useGlobalState";
-import { IncomeFilter } from "../components/incomeFilter";
+import { IncomeFilter } from "../components/income/incomeFilter";
 export const IncomePage = () => {
   const navigate = useNavigate();
   const { setOpenDialog } = useGlobalState();

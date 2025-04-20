@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { FormData, FormState } from "../hooks/useForm";
 import { IIncome, IncomeData } from "../utils/types";
 import { Form, IFormContext } from "./common/form";
-import { useGetIncomeById } from "../hooks/useGetIncomeById";
+import { useGetIncomeById } from "../hooks/income/useGetIncomeById";
 import { useParams } from "react-router-dom";
 
 type CreateIncomeProps = { action: "CREATE" | "UPDATE" };

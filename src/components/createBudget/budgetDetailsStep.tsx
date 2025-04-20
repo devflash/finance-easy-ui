@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import { Form, IFormContext } from "../common/form";
 import { FormData, FormState } from "../../hooks/useForm";
-import { StepWizardActions } from "../common/stepWizard/stepWizardActions";
+import { StepWizardActions } from "../common/stepWizard";
 import { Input } from "../common/input";
 import { FormActions } from "../common/formActions";
 import { BudgetState } from "./createBudget";

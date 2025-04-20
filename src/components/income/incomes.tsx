@@ -1,15 +1,15 @@
-import { Table, Column } from "./common/Table";
+import { Table, Column } from "../common/Table";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Pagination from "@mui/material/Pagination";
-import { IIncome } from "../utils/types";
+import { IIncome } from "../../utils/types";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import { useSearchIncomes } from "../hooks/useSearchIncomes";
+import { useSearchIncomes } from "../../hooks/income/useSearchIncomes";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { Filters } from "./Filters";
-import { PAGE_LIMIT } from "../utils/util";
+import { Filters } from "../Filters";
+import { PAGE_LIMIT } from "../../utils/util";
 
 const IncomeActions = ({ incomeId }: { incomeId: string }) => {
   const navigate = useNavigate();

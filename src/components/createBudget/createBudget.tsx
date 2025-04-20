@@ -2,7 +2,7 @@ import { useReducer } from "react";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { StepWizard, IStep } from "../common/stepWizard/stepWizard";
+import { StepWizard, IStep } from "../common/stepWizard";
 import { BudgetDetailsStep } from "./budgetDetailsStep";
 import { BudgetPercentageStep } from "./budgetPercentageStep";
 const initialState = {

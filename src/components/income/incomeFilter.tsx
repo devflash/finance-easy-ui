@@ -1,10 +1,10 @@
-import { Dialog } from "./common/dialog";
-import { useForm, FormData, FormState } from "../hooks/useForm";
+import { Dialog } from "../common/dialog";
+import { useForm, FormData, FormState } from "../../hooks/useForm";
 import Box from "@mui/material/Box";
-import { Input } from "./common/input";
-import { Select } from "./common/select";
+import { Input } from "../common/input";
+import { Select } from "../common/select";
 import { useSearchParams } from "react-router-dom";
-import { useGlobalState } from "../hooks/useGlobalState";
+import { useGlobalState } from "../../hooks/useGlobalState";
 
 type IIncomeFilter = {
   source: string;
