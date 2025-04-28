@@ -91,17 +91,17 @@ export function makeServer(config: IConfig= {}) {
       });
 
       this.get("expenses/search", (schema, request) => {
-        const source = request.queryParams.source
+        const recipient = request.queryParams.recipient
         const category = request.queryParams.category
         const startDate = request.queryParams.startDate
         const endDate = request.queryParams.endDate
         return schema.all('expense').filter((value)=> {
-          if(source && category){
-            return value.attrs.source === source && value.attrs.category === category
+          if(recipient && category){
+            return value.attrs.moneyPaidTo === recipient && value.attrs.category === category
 
           }
-          else if(source){
-            return value.attrs.source === source
+          else if(recipient){
+            return value.attrs.moneyPaidTo === recipient
           }
           else if(category){
             return value.attrs.category === category

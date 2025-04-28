@@ -22,7 +22,7 @@ export const Filters = () => {
     }
     setSearchParams(query);
   };
-  console.log(filters);
+
   if (!filters.length) {
     return null;
   }

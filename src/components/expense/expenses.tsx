@@ -4,6 +4,10 @@ import { TableActions } from "../common/table/TableActions";
 import { IExpense } from "../../utils/types";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useSearchExpenses } from "../../hooks/expense/useSearchExpenses";
+import { Filters } from "../Filters";
+import Pagination from "@mui/material/Pagination";
+import { PAGE_LIMIT } from "../../utils/util";
+
 const ExpenseActions = ({ incomeId }: { incomeId: string }) => {
   const navigate = useNavigate();
   return (
@@ -45,15 +49,35 @@ const columns: Column<IExpense>[] = [
 ];
 
 export const Expenses = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { data } = useSearchExpenses(searchParams);
   if (!data?.length) {
     return <p>No expenses</p>;
   }
+  const totalPages = data.length / PAGE_LIMIT;
+  const currentPage = searchParams.has("page")
+    ? Number(searchParams.get("page"))
+    : 1;
+
+  const handlePagination = (_: unknown, page: number) => {
+    searchParams.set("page", page.toString());
+    setSearchParams(searchParams);
+  };
   return (
     <Box sx={{ width: "100%" }}>
+      <Filters />
+
       <Table data={data} columns={columns} />
+      {totalPages > 1 && (
+        <Pagination
+          sx={{ mt: "1rem" }}
+          count={totalPages}
+          page={currentPage}
+          color="primary"
+          onChange={handlePagination}
+        />
+      )}
     </Box>
   );
 };

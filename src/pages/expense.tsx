@@ -6,10 +6,12 @@ import AddIcon from "@mui/icons-material/Add";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { Expenses } from "../components/expense/expenses";
 import { useNavigate } from "react-router-dom";
+import { useGlobalState } from "../hooks/useGlobalState";
+import { ExpenseFilter } from "../components/expense/expenseFilter";
 
 export const ExpensePage = () => {
   const navigate = useNavigate();
-
+  const { setOpenDialog } = useGlobalState();
   const handleCreateExpense = () => {
     navigate("/expense/create");
   };
@@ -22,7 +24,7 @@ export const ExpensePage = () => {
           Expenses
         </Typography>
         <Box>
-          <IconButton>
+          <IconButton onClick={() => setOpenDialog(true)}>
             <FilterAltIcon />
           </IconButton>
           <Button
@@ -35,6 +37,8 @@ export const ExpensePage = () => {
           </Button>
         </Box>
       </Box>
+      <ExpenseFilter />
+
       <Expenses />
     </>
   );

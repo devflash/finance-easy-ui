@@ -12,9 +12,7 @@ export const searchExpenses = async (queryParams: object): Promise<IExpense[]> =
 };
 
 export const createExpenses = async (payload: {expense: ExpenseData}): Promise<IExpense> => {
-   debugger
     const response = await axiosInstance.post("api/v1/expenses/create", payload.expense);
-    
     return response.data.expense;
 };
 
