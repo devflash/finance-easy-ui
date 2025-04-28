@@ -29,6 +29,11 @@ export type IncomeData = Record<
   string
 >;
 
+export type ExpenseData = Record<
+  keyof Omit<IExpense, "_id" | "userId" | "createdAt" | "updateAt">,
+  string
+>;
+
 export type IBudget = {
   _id: string
   budgetDetails: {

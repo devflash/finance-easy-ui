@@ -12,7 +12,7 @@ export const Select = (props: SelectProps) => {
   return (
     <Input select {...rest}>
       {options.map((cur) => (
-        <MenuItem key={cur.value} value={cur.label}>
+        <MenuItem key={cur.value} value={cur.value}>
           {cur.label}
         </MenuItem>
       ))}

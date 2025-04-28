@@ -1,64 +1,67 @@
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { Input } from "./common/input";
-import { Select } from "./common/select";
-import { FormActions } from "./common/formActions";
+import { Input } from "../common/input";
+import { Select } from "../common/select";
+import { FormActions } from "../common/formActions";
 import {
   useMutation,
   UseMutationResult,
   useQueryClient,
 } from "@tanstack/react-query";
-import { createIncomes, updateIncomes } from "../services/incomeService";
+import { createExpenses, updateExpenses } from "../../services/expenseService";
 import { useNavigate } from "react-router-dom";
-import { FormData, FormState } from "../hooks/useForm";
-import { IIncome, IncomeData } from "../utils/types";
-import { Form, IFormContext } from "./common/form";
-import { useGetIncomeById } from "../hooks/income/useGetIncomeById";
+import { FormData, FormState } from "../../hooks/useForm";
+import { IExpense, ExpenseData } from "../../utils/types";
+import { Form, IFormContext } from "../common/form";
+import { useGetExpenseById } from "../../hooks/expense/useGetExpenseById";
 import { useParams } from "react-router-dom";
 
-type CreateIncomeProps = { action: "CREATE" | "UPDATE" };
+type CreateExpenseProps = { action: "CREATE" | "UPDATE" };
 
-type IncomeFormProps = {
-  initialState: FormState<IncomeData>;
-  action: CreateIncomeProps["action"];
+type ExpenseFormProps = {
+  initialState: FormState<ExpenseData>;
+  action: CreateExpenseProps["action"];
   mutationFn: (
-    payload: { income: IncomeData } | { income: IncomeData; incomeId: string }
-  ) => Promise<IIncome>;
+    payload:
+      | { expense: ExpenseData }
+      | { expense: ExpenseData; expenseId: string }
+  ) => Promise<IExpense>;
   onFormConfirm: (
-    formState: IFormContext<IncomeData>["formState"],
-    validation: IFormContext<IncomeData>["validation"],
+    formState: IFormContext<ExpenseData>["formState"],
+    validation: IFormContext<ExpenseData>["validation"],
     mutation: UseMutationResult<
-      IIncome,
+      IExpense,
       Error,
       | {
-          income: IncomeData;
+          expense: ExpenseData;
         }
       | {
-          income: IncomeData;
-          incomeId: string;
+          expense: ExpenseData;
+          expenseId: string;
         },
       unknown
     >
   ) => void;
 };
 
-const formData: FormData<IncomeData> = {
-  source: {
-    name: "source",
+const formData: FormData<ExpenseData> = {
+  moneyPaidTo: {
+    name: "moneyPaidTo",
     validation: [
-      (state) => (state?.data?.source === "" ? "Source is mandatory" : ""),
+      (state) =>
+        state?.data?.moneyPaidTo === "" ? "Recipient name is mandatory" : "",
     ],
     render: (state, onChange) => (
       <Input
-        value={state.data?.source}
-        name="source"
-        label="Income source"
-        subLabelText="Please enter the source name from where the income is received"
+        value={state.data?.moneyPaidTo}
+        name="moneyPaidTo"
+        label="Recipient Name"
+        subLabelText="Please enter the Recipient's name"
         onChange={onChange}
         required
-        error={state?.errors?.source?.isError}
-        errorText={state?.errors?.source?.errorMessage}
+        error={state?.errors?.moneyPaidTo?.isError}
+        errorText={state?.errors?.moneyPaidTo?.errorMessage}
       />
     ),
   },
@@ -75,7 +78,7 @@ const formData: FormData<IncomeData> = {
         value={state.data?.amount}
         name="amount"
         label="Amount"
-        subLabelText="Please enter the received amout"
+        subLabelText="Please enter the amout sent"
         type="number"
         onChange={onChange}
         required
@@ -85,24 +88,26 @@ const formData: FormData<IncomeData> = {
     ),
   },
   depositType: {
-    name: "depositType",
+    name: "paymentMethod",
     validation: [
       (state) =>
-        state?.data?.depositType === "" ? "Deposite type is mandatory" : "",
+        state?.data?.paymentMethod === ""
+          ? "Payment method type is mandatory"
+          : "",
     ],
     render: (state, onChange) => (
       <Select
-        name="depositType"
-        value={state.data?.depositType}
-        label="Deposite Type"
-        subLabelText="Please select the type of deposite"
+        name="paymentMethod"
+        value={state.data?.paymentMethod}
+        label="Payment Method"
+        subLabelText="Please select the Payment method type"
         options={[
           { label: "Cash", value: "cash" },
           { label: "Bank account", value: "bankAccount" },
         ]}
         required
-        error={state?.errors?.depositType?.isError}
-        errorText={state?.errors?.depositType?.errorMessage}
+        error={state?.errors?.paymentMethod?.isError}
+        errorText={state?.errors?.paymentMethod?.errorMessage}
         onChange={onChange}
       />
     ),
@@ -118,7 +123,10 @@ const formData: FormData<IncomeData> = {
         value={state.data?.category}
         label="Category"
         subLabelText="Please select the catehory of the income"
-        options={[{ label: "Salary", value: "salary" }]}
+        options={[
+          { label: "Grocery", value: "grocery" },
+          { label: "Light Bill", value: "lightBill" },
+        ]}
         onChange={onChange}
         required
         error={state?.errors?.category?.isError}
@@ -141,64 +149,64 @@ const formData: FormData<IncomeData> = {
       />
     ),
   },
-  incomeDate: {
-    name: "incomeDate",
+  expenseDate: {
+    name: "expenseDate",
     validation: [
       (state) =>
-        state?.data?.incomeDate === "" ? "Income date is mandatory" : "",
+        state?.data?.expenseDate === "" ? "Expense date is mandatory" : "",
     ],
     render: (state, onChange) => (
       <Input
-        name="incomeDate"
-        value={state.data?.incomeDate}
+        name="expenseDate"
+        value={state.data?.expenseDate}
         label="Income Date"
-        subLabelText="Please select the date when the income is received"
+        subLabelText="Please select the date when the expense is made"
         type="date"
         required
-        error={state?.errors?.incomeDate?.isError}
-        errorText={state?.errors?.incomeDate?.errorMessage}
+        error={state?.errors?.expenseDate?.isError}
+        errorText={state?.errors?.expenseDate?.errorMessage}
         onChange={onChange}
       />
     ),
   },
 };
 
-export const CreateOrUpdateIncome = ({ action }: CreateIncomeProps) => {
-  return action === "CREATE" ? <CreateIncome /> : <UpdateIncome />;
+export const CreateOrUpdateExpense = ({ action }: CreateExpenseProps) => {
+  return action === "CREATE" ? <CreateExpense /> : <UpdateExpense />;
 };
 
-const CreateIncome = () => {
+const CreateExpense = () => {
   const initialState = {
     data: {
-      amount: "",
       category: "",
-      depositType: "",
+      moneyPaidTo: "",
+      paymentMethod: "",
+      amount: "",
+      expenseDate: "",
       description: "",
-      incomeDate: "",
-      source: "",
     },
     errors: {},
   };
 
-  const createIncomeHandler = (
-    formState: IFormContext<IncomeData>["formState"],
-    validation: IFormContext<IncomeData>["validation"],
+  const createExpenseHandler = (
+    formState: IFormContext<ExpenseData>["formState"],
+    validation: IFormContext<ExpenseData>["validation"],
     mutation: UseMutationResult<
-      IIncome,
+      IExpense,
       Error,
       | {
-          income: IncomeData;
+          expense: ExpenseData;
         }
       | {
-          income: IncomeData;
-          incomeId: string;
+          expense: ExpenseData;
+          expenseId: string;
         },
       unknown
     >
   ) => {
     validation(
       () => {
-        if (formState.data) mutation.mutate({ income: formState.data });
+        if (formState.data) mutation.mutate({ expense: formState.data });
       },
       (errors) => {
         console.log("errors", errors);
@@ -206,45 +214,45 @@ const CreateIncome = () => {
     );
   };
   return (
-    <IncomeForm
+    <ExpenseForm
       initialState={initialState}
       action="CREATE"
-      mutationFn={createIncomes}
-      onFormConfirm={createIncomeHandler}
+      mutationFn={createExpenses}
+      onFormConfirm={createExpenseHandler}
     />
   );
 };
 
-const UpdateIncome = () => {
-  const { incomeId } = useParams();
-  const { data, isLoading } = useGetIncomeById(incomeId ? incomeId : "");
+const UpdateExpense = () => {
+  const { expenseId } = useParams();
+  const { data, isLoading } = useGetExpenseById(expenseId ? expenseId : "");
   console.log(data);
   const initialState = {
     data: {
-      source: data?.source || "",
+      moneyPaidTo: data?.moneyPaidTo || "",
       amount: String(data?.amount) || "",
       category: data?.category || "",
-      depositType: data?.depositType || "",
+      paymentMethod: data?.paymentMethod || "",
       description: data?.description || "",
-      incomeDate: data?.incomeDate
-        ? new Date(data.incomeDate).toISOString().split("T")[0]
+      expenseDate: data?.expenseDate
+        ? new Date(data.expenseDate).toISOString().split("T")[0]
         : "",
     },
     errors: {},
   };
 
   const updateIncomeHandler = (
-    formState: IFormContext<IncomeData>["formState"],
-    validation: IFormContext<IncomeData>["validation"],
+    formState: IFormContext<ExpenseData>["formState"],
+    validation: IFormContext<ExpenseData>["validation"],
     mutation: UseMutationResult<
-      IIncome,
+      IExpense,
       Error,
       | {
-          income: IncomeData;
+          expense: ExpenseData;
         }
       | {
-          income: IncomeData;
-          incomeId: string;
+          expense: ExpenseData;
+          expenseId: string;
         },
       unknown
     >
@@ -252,7 +260,7 @@ const UpdateIncome = () => {
     validation(
       () => {
         if (formState.data)
-          mutation.mutate({ income: formState.data, incomeId });
+          mutation.mutate({ expense: formState.data, expenseId });
       },
       (errors) => {
         console.log("errors", errors);
@@ -264,53 +272,54 @@ const UpdateIncome = () => {
     return <p>Loading.....</p>;
   }
   if (!data) {
-    return <p>{`No income with id ${incomeId} available`}</p>;
+    return <p>{`No income with id ${expenseId} available`}</p>;
   }
 
   return (
-    <IncomeForm
+    <ExpenseForm
       initialState={initialState}
       action="UPDATE"
-      mutationFn={updateIncomes}
+      mutationFn={updateExpenses}
       onFormConfirm={updateIncomeHandler}
     />
   );
 };
 
-const IncomeForm = ({
+const ExpenseForm = ({
   initialState,
   action,
   mutationFn,
   onFormConfirm,
-}: IncomeFormProps) => {
+}: ExpenseFormProps) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: mutationFn,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["incomes"] });
-      navigate("/incomes");
+      queryClient.invalidateQueries({ queryKey: ["expenses"] });
+
+      navigate("/expenses");
     },
   });
 
-  const cancelHandler = () => navigate("/incomes");
+  const cancelHandler = () => navigate("/expenses");
 
   return (
     <Paper sx={{ padding: "20px", borderRadius: "10px" }}>
       <Typography variant="h1" sx={{ fontSize: "2rem" }}>
-        {action === "CREATE" ? "Add new Income" : "Update Income"}
+        {action === "CREATE" ? "Add new Expense" : "Update Expense"}
       </Typography>
       <Typography variant="subtitle2" sx={{ color: "#A29E9E" }}>
-        Please provide the details about the income
+        Please provide the details about the expense
       </Typography>
       <Box>
         <Form
           formInputs={formData}
           state={initialState}
           formActions={
-            <FormActions<IncomeData>
-              submitBtnLabel="Create Income"
+            <FormActions<ExpenseData>
+              submitBtnLabel="Create Expense"
               submitBtnClick={(formState, validation) =>
                 onFormConfirm(formState, validation, mutation)
               }

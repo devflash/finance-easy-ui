@@ -5,7 +5,14 @@ import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { Expenses } from "../components/expense/expenses";
+import { useNavigate } from "react-router-dom";
+
 export const ExpensePage = () => {
+  const navigate = useNavigate();
+
+  const handleCreateExpense = () => {
+    navigate("/expense/create");
+  };
   return (
     <>
       <Box
@@ -18,7 +25,11 @@ export const ExpensePage = () => {
           <IconButton>
             <FilterAltIcon />
           </IconButton>
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleCreateExpense}
+          >
             <AddIcon sx={{ mr: "0.5rem" }} />
             Create
           </Button>

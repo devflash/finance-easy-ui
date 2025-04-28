@@ -43,6 +43,10 @@ export const router = createBrowserRouter([
         path: "/income/update/:incomeId",
         element: <CreatePage type="income" action="UPDATE" />,
       },
+      {
+        path: "/expense/create",
+        element: <CreatePage type="expense" action="CREATE" />,
+      },
     ],
   },
 ]);

@@ -115,7 +115,11 @@ export function makeServer(config: IConfig= {}) {
         }
         )
       });
-
+      
+      this.post('expenses/create', (schema, request)=>{
+        const body = JSON.parse(request.requestBody);
+        return schema.create('expense', body)
+      });
       this.passthrough()
     },
     seeds(server) {
