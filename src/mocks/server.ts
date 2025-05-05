@@ -24,29 +24,29 @@ export function makeServer(config: IConfig= {}) {
       this.urlPrefix='http://localhost:3000/'
       this.namespace = "/api/v1/";
       
-      this.get("incomes/all", (schema) => {
+      this.get("income/all", (schema) => {
         return schema.all('income')
       });
 
-      this.get("incomes/:incomeId", (schema, request)=>{
+      this.get("income/:incomeId", (schema, request)=>{
         const incomeId = request.params.incomeId;
         const income = schema.db.incomes.where({_id: incomeId})[0]
         return new Response(200, undefined, {income})
       })
       
-      this.post('incomes/create', (schema, request)=>{
+      this.post('income/create', (schema, request)=>{
         const body = JSON.parse(request.requestBody);
         return schema.create('income', body)
       });
 
-      this.put('incomes/:incomeId', (schema, request)=>{
+      this.put('income/:incomeId', (schema, request)=>{
         const body = JSON.parse(request.requestBody);
         const incomeId = request.params.incomeId;
 
         return schema.where('income', {_id: incomeId}).update(body)
       });
 
-      this.get("incomes/search", (schema, request) => {
+      this.get("income/search", (schema, request) => {
         const source = request.queryParams.source
         const category = request.queryParams.category
         const startDate = request.queryParams.startDate
@@ -86,11 +86,11 @@ export function makeServer(config: IConfig= {}) {
         return schema.create('user', body)
       });
       
-      this.get("expenses/all", (schema) => {
+      this.get("expense/all", (schema) => {
         return schema.all('expenses')
       });
 
-      this.get("expenses/search", (schema, request) => {
+      this.get("expense/search", (schema, request) => {
         const recipient = request.queryParams.recipient
         const category = request.queryParams.category
         const startDate = request.queryParams.startDate
@@ -116,7 +116,7 @@ export function makeServer(config: IConfig= {}) {
         )
       });
       
-      this.post('expenses/create', (schema, request)=>{
+      this.post('expense/create', (schema, request)=>{
         const body = JSON.parse(request.requestBody);
         return schema.create('expense', body)
       });

@@ -52,10 +52,10 @@ export const Expenses = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { data } = useSearchExpenses(searchParams);
-  if (!data?.length) {
+  if (!data?.expenses.length) {
     return <p>No expenses</p>;
   }
-  const totalPages = data.length / PAGE_LIMIT;
+  const totalPages = data.count / PAGE_LIMIT;
   const currentPage = searchParams.has("page")
     ? Number(searchParams.get("page"))
     : 1;
@@ -68,7 +68,7 @@ export const Expenses = () => {
     <Box sx={{ width: "100%" }}>
       <Filters />
 
-      <Table data={data} columns={columns} />
+      <Table data={data.expenses} columns={columns} />
       {totalPages > 1 && (
         <Pagination
           sx={{ mt: "1rem" }}

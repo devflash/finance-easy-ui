@@ -58,11 +58,11 @@ export const Incomes = () => {
 
   const { data } = useSearchIncomes(searchParams);
 
-  if (!data?.length) {
+  if (!data?.incomes.length) {
     return <p>No incomes</p>;
   }
 
-  const totalPages = data.length / PAGE_LIMIT;
+  const totalPages = data.count / PAGE_LIMIT;
   const currentPage = searchParams.has("page")
     ? Number(searchParams.get("page"))
     : 1;
@@ -78,7 +78,7 @@ export const Incomes = () => {
       <Typography variant="overline" component="p">
         Income Table
       </Typography>
-      <Table data={data} columns={columns} />
+      <Table data={data.incomes} columns={columns} />
       {totalPages > 1 && (
         <Pagination
           sx={{ mt: "1rem" }}

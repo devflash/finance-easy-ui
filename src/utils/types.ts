@@ -68,3 +68,13 @@ export type UserSignup = {
   email: string,
   password: string
 }
+
+export type SearchIncomes = {
+  incomes: IIncome[],
+  count: number
+}
+
+export type SearchExpenses = {
+  expenses: IExpense[],
+  count: number
+}
