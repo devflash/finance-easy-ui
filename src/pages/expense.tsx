@@ -8,7 +8,7 @@ import { Expenses } from "../components/expense/expenses";
 import { useNavigate } from "react-router-dom";
 import { useGlobalState } from "../hooks/useGlobalState";
 import { ExpenseFilter } from "../components/expense/expenseFilter";
-
+import { ExpenseOverview } from "../components/expense/expenseOverview";
 export const ExpensePage = () => {
   const navigate = useNavigate();
   const { setOpenDialog } = useGlobalState();
@@ -40,6 +40,7 @@ export const ExpensePage = () => {
       <ExpenseFilter />
 
       <Expenses />
+      <ExpenseOverview />
     </>
   );
 };

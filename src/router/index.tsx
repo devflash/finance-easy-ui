@@ -6,6 +6,7 @@ import { CreatePage } from "../pages/create.tsx";
 import { BudgetsPage } from "../pages/budgetsPage";
 import { LoginPage } from "../pages/loginPage.tsx";
 import { SignupPage } from "../pages/signupPage.tsx";
+import { DashboardPage } from "../pages/dashboadPage.tsx";
 export const router = createBrowserRouter([
   {
     path: "/login",
@@ -46,6 +47,10 @@ export const router = createBrowserRouter([
       {
         path: "/expense/create",
         element: <CreatePage type="expense" action="CREATE" />,
+      },
+      {
+        path: "/dashboard",
+        element: <DashboardPage />,
       },
     ],
   },

@@ -8,6 +8,8 @@ import { Incomes } from "../components/income/incomes";
 import { useNavigate } from "react-router-dom";
 import { useGlobalState } from "../hooks/useGlobalState";
 import { IncomeFilter } from "../components/income/incomeFilter";
+import { IncomeOverview } from "../components/income/incomeOverview";
+
 export const IncomePage = () => {
   const navigate = useNavigate();
   const { setOpenDialog } = useGlobalState();
@@ -39,6 +41,7 @@ export const IncomePage = () => {
       </Box>
       <IncomeFilter />
       <Incomes />
+      <IncomeOverview />
     </>
   );
 };

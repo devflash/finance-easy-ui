@@ -1,0 +1,74 @@
+{
+    "totalIncome": 26180,
+    "totalExpense": 4000,
+    "incomeByCategory": [
+        {
+            "value": 900,
+            "name": "Salay"
+        },
+        {
+            "value": 25280,
+            "name": "Salary"
+        }
+    ],
+    "incomeByMonths": [
+        {
+            "value": 450,
+            "name": "Oct"
+        },
+        {
+            "value": 17330,
+            "name": "Jan"
+        },
+        {
+            "value": 450,
+            "name": "Jul"
+        }
+    ],
+    "expenseByCategory": [
+        {
+            "value": 1500,
+            "name": "Grocery"
+        },
+        {
+            "value": 2500,
+            "name": "Hotel"
+        }
+    ],
+    "expenseByMonths": [
+        {
+            "value": 500,
+            "name": "Aug"
+        },
+        {
+            "value": 3500,
+            "name": "Jan"
+        }
+    ],
+    "incomesVsExpenses": [
+        {
+            "_id": 1,
+            "iv": 17330,
+            "ev": 3500,
+            "name": "Jan"
+        },
+        {
+            "_id": 7,
+            "iv": 450,
+            "ev": 0,
+            "name": "Jul"
+        },
+        {
+            "_id": 8,
+            "iv": 0,
+            "ev": 500,
+            "name": "Aug"
+        },
+        {
+            "_id": 10,
+            "iv": 450,
+            "ev": 0,
+            "name": "Oct"
+        }
+    ]
+}

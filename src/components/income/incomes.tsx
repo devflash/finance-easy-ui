@@ -1,5 +1,6 @@
 import { Table, Column } from "../common/table/Table";
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
 import { IIncome } from "../../utils/types";
 import { useSearchIncomes } from "../../hooks/income/useSearchIncomes";
@@ -74,6 +75,9 @@ export const Incomes = () => {
   return (
     <Box sx={{ width: "100%" }}>
       <Filters />
+      <Typography variant="overline" component="p">
+        Income Table
+      </Typography>
       <Table data={data} columns={columns} />
       {totalPages > 1 && (
         <Pagination

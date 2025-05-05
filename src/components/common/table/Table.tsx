@@ -33,7 +33,7 @@ const RenderRow = <T,>({ row, columns }: { row: T; columns: Column<T>[] }) => {
 
 export const Table = <T,>({ data, columns }: TableProps<T>) => {
   return (
-    <TableContainer component={Paper} sx={{ borderRadius: "10px" }}>
+    <TableContainer component={Paper} sx={{ borderRadius: "10px", mt: "1rem" }}>
       <MaterialTable sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead sx={{ backgroundColor: "secondary.main" }}>
           <TableRow>

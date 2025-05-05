@@ -55,6 +55,12 @@ const links = [
     path: "/budgets",
     icon: (styles: CSSObject) => <OutboxIcon sx={styles} />,
   },
+  {
+    key: "dashboard",
+    name: "Dashboard",
+    path: "/dashboard",
+    icon: (styles: CSSObject) => <OutboxIcon sx={styles} />,
+  },
 ];
 
 export const Navigation = () => {
