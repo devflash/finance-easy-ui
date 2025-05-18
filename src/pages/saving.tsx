@@ -7,6 +7,7 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { Savings } from "../components/saving/savings";
 import { useNavigate } from "react-router-dom";
 import { useGlobalState } from "../hooks/useGlobalState";
+import { SavingFilter } from "../components/saving/savingFilter";
 
 export const SavingPage = () => {
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ export const SavingPage = () => {
           </Button>
         </Box>
       </Box>
-      {/* <IncomeFilter /> */}
+      <SavingFilter />
       <Savings />
       {/* <IncomeOverview /> */}
     </>
