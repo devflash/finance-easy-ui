@@ -78,3 +78,24 @@ export type SearchExpenses = {
   expenses: IExpense[],
   count: number
 }
+
+export interface ISaving{
+    _id: string
+    type: string,
+    amount: number,
+    userId: string,
+    date: Date,
+    description:  string,
+    createdAt: Date;
+    updateAt: Date;
+}
+
+export type SavingData = Record<
+  keyof Omit<ISaving, "_id" | "userId" | "createdAt" | "updateAt">,
+  string
+>;
+
+export type SearchSavings = {
+  savings: ISaving[],
+  count: number
+}

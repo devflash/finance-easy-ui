@@ -3,6 +3,7 @@
 import { createServer, Model, Response } from "miragejs";
 import incomes from './jsons/incomes.json'
 import expenses from './jsons/expenses.json'
+import savings from './jsons/savings.json';
 
 type IConfig = {
   environment?: string
@@ -17,7 +18,8 @@ export function makeServer(config: IConfig= {}) {
       income: Model,
       expense: Model,
       budget: Model,
-      user: Model
+      user: Model,
+      saving: Model
     },
     
     routes() {
@@ -120,12 +122,53 @@ export function makeServer(config: IConfig= {}) {
         const body = JSON.parse(request.requestBody);
         return schema.create('expense', body)
       });
+
+      this.get("saving/all", (schema) => {
+        return schema.all('saving')
+      });
+
+      this.get("saving/:savingId", (schema, request)=>{
+        const savingId = request.params.savingId;
+        const saving = schema.db.savings.where({_id: savingId})[0]
+        return new Response(200, undefined, {saving})
+      })
+      
+      this.post('saving/create', (schema, request)=>{
+        const body = JSON.parse(request.requestBody);
+        return schema.create('saving', body)
+      });
+
+      this.put('saving/:savingId', (schema, request)=>{
+        const body = JSON.parse(request.requestBody);
+        const savingId = request.params.savingId;
+
+        return schema.where('saving', {_id: savingId}).update(body)
+      });
+
+      this.get("saving/search", (schema, request) => {
+        const type = request.queryParams.type
+        const startDate = request.queryParams.startDate
+        const endDate = request.queryParams.endDate
+        return schema.all('saving').filter((value)=> {
+          if(type){
+            return value.attrs.type === type
+          }
+          else if(startDate && endDate){
+            return value.attrs.date >=startDate && value.attrs.date <= endDate
+          }
+          else{
+            return true
+          }
+        }
+        )
+      });
       this.passthrough()
     },
     seeds(server) {
       server.db.loadData({
         incomes,
-        expenses
+        expenses,
+        savings
       })
     },
   });
