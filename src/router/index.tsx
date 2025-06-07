@@ -55,6 +55,10 @@ export const router = createBrowserRouter([
         element: <CreatePage type="expense" action="CREATE" />,
       },
       {
+        path: "/saving/create",
+        element: <CreatePage type="saving" action="CREATE" />,
+      },
+      {
         path: "/dashboard",
         element: <DashboardPage />,
       },
