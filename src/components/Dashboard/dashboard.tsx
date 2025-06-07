@@ -11,7 +11,10 @@ import {
   LineChart,
   Line,
 } from "recharts";
-import { incomesVsExpenses } from "../../mocks/jsons/dashboard.json";
+import {
+  incomesVsExpenses,
+  savingsVsExpense,
+} from "../../mocks/jsons/dashboard.json";
 export const Dashboard = () => {
   return (
     <Box>
@@ -24,7 +27,7 @@ export const Dashboard = () => {
         <Card title="Total Savings" amount={1000} />
         <Card title="Net Worth" amount={6000} />
       </Box>
-
+      {/* Income vs savings */}
       <Box display="flex" marginTop="1rem">
         <ResponsiveContainer
           width="90%"
@@ -54,6 +57,43 @@ export const Dashboard = () => {
             <Line
               type="monotone"
               dataKey="iv"
+              stroke="#8884d8"
+              activeDot={{ r: 8 }}
+            />
+            <Line type="monotone" dataKey="ev" stroke="#82ca9d" />
+          </LineChart>
+        </ResponsiveContainer>
+      </Box>
+      {/* Savings vs Expenses */}
+      <Box display="flex" marginTop="1rem">
+        <ResponsiveContainer
+          width="90%"
+          height={200}
+          style={{
+            borderRadius: "10px",
+            boxShadow: "1px 2px 7px 0px",
+            padding: "16px",
+          }}
+        >
+          <LineChart
+            width={500}
+            height={300}
+            data={savingsVsExpense}
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line
+              type="monotone"
+              dataKey="sv"
               stroke="#8884d8"
               activeDot={{ r: 8 }}
             />

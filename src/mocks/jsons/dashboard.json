@@ -1,48 +1,16 @@
 {
-    "totalIncome": 26180,
-    "totalExpense": 4000,
-    "incomeByCategory": [
+    "total": [
         {
-            "value": 900,
-            "name": "Salay"
+            "_id": "Income",
+            "value": 26180
         },
         {
-            "value": 25280,
-            "name": "Salary"
-        }
-    ],
-    "incomeByMonths": [
-        {
-            "value": 450,
-            "name": "Oct"
+            "_id": "Expense",
+            "value": 4000
         },
         {
-            "value": 17330,
-            "name": "Jan"
-        },
-        {
-            "value": 450,
-            "name": "Jul"
-        }
-    ],
-    "expenseByCategory": [
-        {
-            "value": 1500,
-            "name": "Grocery"
-        },
-        {
-            "value": 2500,
-            "name": "Hotel"
-        }
-    ],
-    "expenseByMonths": [
-        {
-            "value": 500,
-            "name": "Aug"
-        },
-        {
-            "value": 3500,
-            "name": "Jan"
+            "_id": "Savings",
+            "value": 2220
         }
     ],
     "incomesVsExpenses": [
@@ -69,6 +37,50 @@
             "iv": 450,
             "ev": 0,
             "name": "Oct"
+        }
+    ],
+    "savingsVsExpense": [
+        {
+            "_id": 1,
+            "sv": 910,
+            "ev": 3500,
+            "name": "Jan"
+        },
+        {
+            "_id": 2,
+            "sv": 450,
+            "ev": 0,
+            "name": "Feb"
+        },
+        {
+            "_id": 3,
+            "sv": 450,
+            "ev": 0,
+            "name": "Mar"
+        },
+        {
+            "_id": 4,
+            "sv": 200,
+            "ev": 0,
+            "name": "Apr"
+        },
+        {
+            "_id": 5,
+            "sv": 200,
+            "ev": 0,
+            "name": "May"
+        },
+        {
+            "_id": 6,
+            "sv": 10,
+            "ev": 0,
+            "name": "Jun"
+        },
+        {
+            "_id": 8,
+            "sv": 0,
+            "ev": 500,
+            "name": "Aug"
         }
     ]
 }
