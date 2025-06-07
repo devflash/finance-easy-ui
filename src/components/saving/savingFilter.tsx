@@ -7,13 +7,13 @@ import { useSearchParams } from "react-router-dom";
 import { useGlobalState } from "../../hooks/useGlobalState";
 
 type ISavingFilter = {
-  type: string;
+  investmentType: string;
   startDate: string;
   endDate: string;
 };
 const initialState: FormState<ISavingFilter> = {
   data: {
-    type: "",
+    investmentType: "",
     endDate: "",
     startDate: "",
   },
@@ -24,8 +24,8 @@ const formInputs: FormData<ISavingFilter> = {
     name: "type",
     render: (state, onChange) => (
       <Select
-        name="type"
-        value={state.data?.type}
+        name="investmentType"
+        value={state.data?.investmentType}
         label="Investment type"
         options={[
           { label: "Mutual Fund", value: "mf" },

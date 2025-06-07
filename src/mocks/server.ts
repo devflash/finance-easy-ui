@@ -146,12 +146,12 @@ export function makeServer(config: IConfig= {}) {
       });
 
       this.get("saving/search", (schema, request) => {
-        const type = request.queryParams.type
+        const investmentType = request.queryParams.investmentType
         const startDate = request.queryParams.startDate
         const endDate = request.queryParams.endDate
         return schema.all('saving').filter((value)=> {
-          if(type){
-            return value.attrs.type === type
+          if(investmentType){
+            return value.attrs.investmentType === investmentType
           }
           else if(startDate && endDate){
             return value.attrs.date >=startDate && value.attrs.date <= endDate

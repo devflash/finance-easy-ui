@@ -34,7 +34,7 @@ const columns: Column<ISaving>[] = [
     label: "Type",
     render: (saving) => (
       <span>
-        {SavingTypeLabel[saving.type as keyof typeof SavingTypeLabel]}
+        {SavingTypeLabel[saving.investmentType as keyof typeof SavingTypeLabel]}
       </span>
     ),
   },
