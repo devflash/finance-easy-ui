@@ -1,12 +1,12 @@
 {
     "total": [
         {
-            "_id": "Income",
-            "value": 26180
-        },
-        {
             "_id": "Expense",
             "value": 4000
+        },
+        {
+            "_id": "Income",
+            "value": 26180
         },
         {
             "_id": "Savings",
@@ -82,5 +82,31 @@
             "ev": 500,
             "name": "Aug"
         }
-    ]
+    ],
+    "topSpendings": [
+        {
+            "_id": "6804d0106c63cca9283a177c",
+            "amount": 2500,
+            "expenseDate": "2024-01-01T00:00:00.000Z"
+        },
+        {
+            "_id": "681410b6da43d368dcc7b57a",
+            "amount": 500,
+            "expenseDate": "2024-08-25T00:00:00.000Z"
+        },
+        {
+            "_id": "6814fcac277842ea98f48e07",
+            "amount": 500,
+            "expenseDate": "2024-01-12T00:00:00.000Z"
+        },
+        {
+            "_id": "6814ffc10abbd9778d9cf715",
+            "amount": 500,
+            "expenseDate": "2024-01-12T00:00:00.000Z"
+        }
+    ],
+    "incomeByMonths": [],
+    "incomeByCategory": [],
+    "expenseByMonths": [],
+    "expenseByCategory": []
 }

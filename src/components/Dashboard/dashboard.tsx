@@ -15,6 +15,7 @@ import {
   incomesVsExpenses,
   savingsVsExpense,
 } from "../../mocks/jsons/dashboard.json";
+import { TopSpendings } from "./TopSpendings";
 export const Dashboard = () => {
   return (
     <Box>
@@ -101,6 +102,7 @@ export const Dashboard = () => {
           </LineChart>
         </ResponsiveContainer>
       </Box>
+      <TopSpendings />
     </Box>
   );
 };
