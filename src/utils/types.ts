@@ -3,12 +3,13 @@ export interface IIncome{
     source: string,
     amount: number,
     userId: string,
-    incomeDate: Date,
+    date: Date,
     depositType: string,
     description:  string,
     category:  string,
     createdAt: Date;
     updateAt: Date;
+    type: 'Income'
 }
 
 export type IExpense = {
@@ -17,20 +18,21 @@ export type IExpense = {
   moneyPaidTo: string,
   paymentMethod: string,
   amount: number,
-  expenseDate: Date,
+  date: Date,
   description: string,
   userId: string,
   createdAt: Date;
   updateAt: Date;
+  type: 'Expense'
 }
 
 export type IncomeData = Record<
-  keyof Omit<IIncome, "_id" | "userId" | "createdAt" | "updateAt">,
+  keyof Omit<IIncome, "_id" | "userId" | "createdAt" | "updateAt" | "type">,
   string
 >;
 
 export type ExpenseData = Record<
-  keyof Omit<IExpense, "_id" | "userId" | "createdAt" | "updateAt">,
+  keyof Omit<IExpense, "_id" | "userId" | "createdAt" | "updateAt" | "type">,
   string
 >;
 
@@ -88,10 +90,11 @@ export interface ISaving{
     description:  string,
     createdAt: Date;
     updateAt: Date;
+    type: "Saving"
 }
 
 export type SavingData = Record<
-  keyof Omit<ISaving, "_id" | "userId" | "createdAt" | "updateAt">,
+  keyof Omit<ISaving, "_id" | "userId" | "createdAt" | "updateAt" | "type">,
   string
 >;
 

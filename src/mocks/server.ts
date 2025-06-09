@@ -65,7 +65,7 @@ export function makeServer(config: IConfig= {}) {
             return value.attrs.category === category
           }
           else if(startDate && endDate){
-            return value.attrs.incomeDate >=startDate && value.attrs.incomeDate <= endDate
+            return value.attrs.date >=startDate && value.attrs.date <= endDate
           }
           else{
             return true
@@ -109,7 +109,7 @@ export function makeServer(config: IConfig= {}) {
             return value.attrs.category === category
           }
           else if(startDate && endDate){
-            return value.attrs.incomeDate >=startDate && value.attrs.incomeDate <= endDate
+            return value.attrs.date >=startDate && value.attrs.date <= endDate
           }
           else{
             return true

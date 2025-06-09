@@ -149,22 +149,21 @@ const formData: FormData<ExpenseData> = {
       />
     ),
   },
-  expenseDate: {
-    name: "expenseDate",
+  date: {
+    name: "date",
     validation: [
-      (state) =>
-        state?.data?.expenseDate === "" ? "Expense date is mandatory" : "",
+      (state) => (state?.data?.date === "" ? "Expense date is mandatory" : ""),
     ],
     render: (state, onChange) => (
       <Input
-        name="expenseDate"
-        value={state.data?.expenseDate}
+        name="date"
+        value={state.data?.date}
         label="Income Date"
         subLabelText="Please select the date when the expense is made"
         type="date"
         required
-        error={state?.errors?.expenseDate?.isError}
-        errorText={state?.errors?.expenseDate?.errorMessage}
+        error={state?.errors?.date?.isError}
+        errorText={state?.errors?.date?.errorMessage}
         onChange={onChange}
       />
     ),
@@ -182,7 +181,7 @@ const CreateExpense = () => {
       moneyPaidTo: "",
       paymentMethod: "",
       amount: "",
-      expenseDate: "",
+      date: "",
       description: "",
     },
     errors: {},
@@ -234,9 +233,7 @@ const UpdateExpense = () => {
       category: data?.category || "",
       paymentMethod: data?.paymentMethod || "",
       description: data?.description || "",
-      expenseDate: data?.expenseDate
-        ? new Date(data.expenseDate).toISOString().split("T")[0]
-        : "",
+      date: data?.date ? new Date(data.date).toISOString().split("T")[0] : "",
     },
     errors: {},
   };

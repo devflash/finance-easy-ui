@@ -141,22 +141,21 @@ const formData: FormData<IncomeData> = {
       />
     ),
   },
-  incomeDate: {
-    name: "incomeDate",
+  date: {
+    name: "date",
     validation: [
-      (state) =>
-        state?.data?.incomeDate === "" ? "Income date is mandatory" : "",
+      (state) => (state?.data?.date === "" ? "Income date is mandatory" : ""),
     ],
     render: (state, onChange) => (
       <Input
-        name="incomeDate"
-        value={state.data?.incomeDate}
+        name="date"
+        value={state.data?.date}
         label="Income Date"
         subLabelText="Please select the date when the income is received"
         type="date"
         required
-        error={state?.errors?.incomeDate?.isError}
-        errorText={state?.errors?.incomeDate?.errorMessage}
+        error={state?.errors?.date?.isError}
+        errorText={state?.errors?.date?.errorMessage}
         onChange={onChange}
       />
     ),
@@ -174,7 +173,7 @@ const CreateIncome = () => {
       category: "",
       depositType: "",
       description: "",
-      incomeDate: "",
+      date: "",
       source: "",
     },
     errors: {},
@@ -226,9 +225,7 @@ const UpdateIncome = () => {
       category: data?.category || "",
       depositType: data?.depositType || "",
       description: data?.description || "",
-      incomeDate: data?.incomeDate
-        ? new Date(data.incomeDate).toISOString().split("T")[0]
-        : "",
+      date: data?.date ? new Date(data.date).toISOString().split("T")[0] : "",
     },
     errors: {},
   };

@@ -32,9 +32,7 @@ const columns: Column<IIncome>[] = [
   {
     id: "date",
     label: "Date",
-    render: (income) => (
-      <span>{new Date(income.incomeDate).toDateString()}</span>
-    ),
+    render: (income) => <span>{new Date(income.date).toDateString()}</span>,
   },
   {
     id: "amount",
