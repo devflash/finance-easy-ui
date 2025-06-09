@@ -10,10 +10,13 @@ import {
   CartesianGrid,
   LineChart,
   Line,
+  BarChart,
+  Bar,
 } from "recharts";
 import {
   incomesVsExpenses,
   savingsVsExpense,
+  networth,
 } from "../../mocks/jsons/dashboard.json";
 import { TopSpendings } from "./TopSpendings";
 export const Dashboard = () => {
@@ -27,6 +30,36 @@ export const Dashboard = () => {
         <Card title="Total Expense" amount={4000} />
         <Card title="Total Savings" amount={1000} />
         <Card title="Net Worth" amount={6000} />
+      </Box>
+      <Box display="flex" marginTop="1rem">
+        <ResponsiveContainer
+          width="90%"
+          height={200}
+          style={{
+            borderRadius: "10px",
+            boxShadow: "1px 2px 7px 0px",
+            padding: "16px",
+          }}
+        >
+          <BarChart
+            width={500}
+            height={300}
+            data={networth}
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="nw" fill="#8884d8" />
+          </BarChart>
+        </ResponsiveContainer>
       </Box>
       {/* Income vs savings */}
       <Box display="flex" marginTop="1rem">

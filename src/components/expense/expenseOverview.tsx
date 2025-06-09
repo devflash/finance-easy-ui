@@ -15,7 +15,7 @@ import {
 import {
   expenseByMonths,
   expenseByCategory,
-} from "../../mocks/jsons/dashboard.json";
+} from "../../mocks/jsons/expenseOverview.json";
 
 export const ExpenseOverview = () => {
   return (

@@ -37,11 +37,7 @@ export const TopSpendings = () => {
                   >
                     Housing
                     <Typography sx={{ fontSize: "0.8rem" }}>
-                      {
-                        new Date(expense.expenseDate)
-                          .toISOString()
-                          .split("T")[0]
-                      }
+                      {new Date(expense.date).toISOString().split("T")[0]}
                     </Typography>
                   </Typography>
                   <Typography

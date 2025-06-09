@@ -6,10 +6,10 @@
         },
         {
             "_id": "Income",
-            "value": 26180
+            "value": 26980
         },
         {
-            "_id": "Savings",
+            "_id": "Saving",
             "value": 2220
         }
     ],
@@ -19,6 +19,36 @@
             "iv": 17330,
             "ev": 3500,
             "name": "Jan"
+        },
+        {
+            "_id": 2,
+            "iv": 0,
+            "ev": 0,
+            "name": "Feb"
+        },
+        {
+            "_id": 3,
+            "iv": 0,
+            "ev": 0,
+            "name": "Mar"
+        },
+        {
+            "_id": 4,
+            "iv": 0,
+            "ev": 0,
+            "name": "Apr"
+        },
+        {
+            "_id": 5,
+            "iv": 0,
+            "ev": 0,
+            "name": "May"
+        },
+        {
+            "_id": 6,
+            "iv": 0,
+            "ev": 0,
+            "name": "Jun"
         },
         {
             "_id": 7,
@@ -77,36 +107,97 @@
             "name": "Jun"
         },
         {
+            "_id": 7,
+            "sv": 0,
+            "ev": 0,
+            "name": "Jul"
+        },
+        {
             "_id": 8,
             "sv": 0,
             "ev": 500,
             "name": "Aug"
+        },
+        {
+            "_id": 10,
+            "sv": 0,
+            "ev": 0,
+            "name": "Oct"
         }
     ],
     "topSpendings": [
         {
+            "_id": "67f2591654fd9be69cf40d9e",
+            "amount": 5600,
+            "date": "2024-01-09T00:00:00.000Z"
+        },
+        {
+            "_id": "67f2590654fd9be69cf40d9b",
+            "amount": 5600,
+            "date": "2024-01-10T00:00:00.000Z"
+        },
+        {
             "_id": "6804d0106c63cca9283a177c",
+            "moneyPaidTo": "A",
             "amount": 2500,
-            "expenseDate": "2024-01-01T00:00:00.000Z"
+            "date": "2024-01-01T00:00:00.000Z"
         },
         {
-            "_id": "681410b6da43d368dcc7b57a",
-            "amount": 500,
-            "expenseDate": "2024-08-25T00:00:00.000Z"
+            "_id": "67f258d754fd9be69cf40d8f",
+            "amount": 800,
+            "date": "2025-01-02T00:00:00.000Z"
         },
         {
-            "_id": "6814fcac277842ea98f48e07",
-            "amount": 500,
-            "expenseDate": "2024-01-12T00:00:00.000Z"
-        },
-        {
-            "_id": "6814ffc10abbd9778d9cf715",
-            "amount": 500,
-            "expenseDate": "2024-01-12T00:00:00.000Z"
+            "_id": "67f2594454fd9be69cf40da8",
+            "amount": 600,
+            "date": "2024-01-06T00:00:00.000Z"
         }
     ],
-    "incomeByMonths": [],
-    "incomeByCategory": [],
-    "expenseByMonths": [],
-    "expenseByCategory": []
+    "networth": [
+        {
+            "_id": 1,
+            "name": "Jan",
+            "nw": 13830
+        },
+        {
+            "_id": 2,
+            "name": "Feb",
+            "nw": 0
+        },
+        {
+            "_id": 3,
+            "name": "Mar",
+            "nw": 0
+        },
+        {
+            "_id": 4,
+            "name": "Apr",
+            "nw": 0
+        },
+        {
+            "_id": 5,
+            "name": "May",
+            "nw": 0
+        },
+        {
+            "_id": 6,
+            "name": "Jun",
+            "nw": 0
+        },
+        {
+            "_id": 7,
+            "name": "Jul",
+            "nw": 450
+        },
+        {
+            "_id": 8,
+            "name": "Aug",
+            "nw": -500
+        },
+        {
+            "_id": 10,
+            "name": "Oct",
+            "nw": 450
+        }
+    ]
 }
