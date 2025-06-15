@@ -5,6 +5,7 @@ import incomes from './jsons/incomes.json'
 import expenses from './jsons/expenses.json'
 import savings from './jsons/savings.json';
 import cards from './jsons/cards.json'
+import banks from './jsons/banks.json'
 
 type IConfig = {
   environment?: string
@@ -21,7 +22,8 @@ export function makeServer(config: IConfig= {}) {
       budget: Model,
       user: Model,
       saving: Model,
-      cards: Model
+      cards: Model,
+      banks: Model
     },
     
     routes() {
@@ -175,6 +177,17 @@ export function makeServer(config: IConfig= {}) {
         return new Response(200, {}, {body})
       });
 
+      this.get('user/profile/banks', (schema)=>{
+        return schema.banks.all();
+      });
+
+      this.post('user/profile/banks/add', (schema, request)=>{
+        const body = JSON.parse(request.requestBody);
+        schema.create('banks', body)
+        return new Response(200, {}, {body})
+      });
+
+
       this.passthrough()
     },
     seeds(server) {
@@ -182,7 +195,8 @@ export function makeServer(config: IConfig= {}) {
         incomes,
         expenses,
         savings,
-        cards
+        cards,
+        banks
       })
     },
   });

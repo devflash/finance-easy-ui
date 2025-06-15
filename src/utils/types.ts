@@ -118,3 +118,19 @@ export type ICardData = Record<
   keyof Omit<ICard, "_id" | "userId" | "createdAt" | "updateAt">,
   string
 >;
+
+export type IBankAccounts = {
+  _id: string
+  userId: string
+  bankName: string;
+  accountNumber: string;
+  branch: string;
+  type: string;
+  createdAt: Date
+  updateAt: Date
+};
+
+export type IBankAccountsData = Record<
+  keyof Omit<IBankAccounts, "_id" | "userId" | "createdAt" | "updateAt">,
+  string
+>;

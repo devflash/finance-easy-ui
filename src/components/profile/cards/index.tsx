@@ -5,6 +5,7 @@ import { useGlobalState } from "../../../hooks/useGlobalState";
 import { CardForm } from "./CardForm";
 import { ICard } from "../../../utils/types";
 import { useGetcards } from "../../../hooks/profile/useGetCards";
+
 const columns: Column<ICard>[] = [
   {
     id: "cardNumber",
@@ -30,9 +31,9 @@ const columns: Column<ICard>[] = [
 
 export const CreditCards = () => {
   const { data } = useGetcards();
-  const { setOpenDialog } = useGlobalState();
+  const { setOpenDialogKey } = useGlobalState();
   const handleAddCard = () => {
-    setOpenDialog(true);
+    setOpenDialogKey("CREDIT_CARD_DIALOG");
   };
   // ToDo: Improve this to show in table
   if (!data?.length) {
@@ -40,7 +41,7 @@ export const CreditCards = () => {
   }
 
   return (
-    <Box bgcolor="#fff" padding="1rem" borderRadius="10px">
+    <Box bgcolor="#fff" padding="1rem" borderRadius="10px" marginBottom="1rem">
       <Typography component="h5" variant="h5">
         Credit Cards
       </Typography>

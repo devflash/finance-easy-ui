@@ -93,7 +93,7 @@ export const PersonalInfo = () => {
   };
 
   return (
-    <Box bgcolor="#fff" padding="1rem" borderRadius="10px">
+    <Box bgcolor="#fff" padding="1rem" borderRadius="10px" marginBottom="1rem">
       <Typography component="h5" variant="h5">
         Profile
       </Typography>

@@ -10,6 +10,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useGlobalState } from "../../hooks/useGlobalState";
 
 type IDialogProps = {
+  dialogKey: string;
   dialogTitle: string;
   children: JSX.Element;
   dialogBtnLabel?: string;
@@ -27,6 +28,7 @@ const BootstrapDialog = styled(MuiDialog)(({ theme }) => ({
 }));
 
 export const Dialog = ({
+  dialogKey,
   dialogTitle,
   children,
   dialogBtnLabel,
@@ -34,21 +36,21 @@ export const Dialog = ({
   dilogBtnRenderer,
   ...rest
 }: IDialogProps) => {
-  const { openDialog, setOpenDialog } = useGlobalState();
+  const { openDialogKey, setOpenDialogKey } = useGlobalState();
   return (
     <React.Fragment>
       <BootstrapDialog
         {...rest}
-        onClose={() => setOpenDialog(false)}
+        onClose={() => setOpenDialogKey("")}
         aria-labelledby="customized-dialog-title"
-        open={openDialog}
+        open={openDialogKey === dialogKey}
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
           {dialogTitle}
         </DialogTitle>
         <IconButton
           aria-label="close"
-          onClick={() => setOpenDialog(false)}
+          onClick={() => setOpenDialogKey("")}
           sx={{
             position: "absolute",
             right: 8,

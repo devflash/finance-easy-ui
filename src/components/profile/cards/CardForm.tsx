@@ -92,7 +92,7 @@ const formInputs: FormData<ICardData> = {
 };
 
 export const CardForm = () => {
-  const { setOpenDialog } = useGlobalState();
+  const { setOpenDialogKey } = useGlobalState();
   const { formState, handleValueChange, validation } = useForm(
     formInputs,
     initialState
@@ -102,7 +102,7 @@ export const CardForm = () => {
     mutationFn: addCard,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cards"] });
-      setOpenDialog(false);
+      setOpenDialogKey("");
     },
   });
   const onAddClick = () => {
@@ -119,6 +119,7 @@ export const CardForm = () => {
   };
   return (
     <Dialog
+      dialogKey="CREDIT_CARD_DIALOG"
       dialogTitle="Add Credit/Debit Card"
       dialogBtnLabel="Add"
       dialogBtnHandler={onAddClick}

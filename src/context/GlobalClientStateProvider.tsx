@@ -1,8 +1,8 @@
 import { useState, createContext } from "react";
 
 type Icontext = {
-  openDialog: boolean;
-  setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>;
+  openDialogKey: string;
+  setOpenDialogKey: React.Dispatch<React.SetStateAction<string>>;
 };
 
 type GlobalContextProps = {
@@ -10,14 +10,14 @@ type GlobalContextProps = {
 };
 
 export const GlobalState = createContext<Icontext>({
-  openDialog: false,
-  setOpenDialog: () => {},
+  openDialogKey: "",
+  setOpenDialogKey: () => {},
 });
 
 export const GlobalClientStateProvider = ({ children }: GlobalContextProps) => {
-  const [openDialog, setOpenDialog] = useState(false);
+  const [openDialogKey, setOpenDialogKey] = useState("");
   return (
-    <GlobalState.Provider value={{ openDialog, setOpenDialog }}>
+    <GlobalState.Provider value={{ openDialogKey, setOpenDialogKey }}>
       {children}
     </GlobalState.Provider>
   );

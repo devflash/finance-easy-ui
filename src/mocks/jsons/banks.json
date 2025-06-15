@@ -1,0 +1,20 @@
+[
+  {
+    "bankName": "IDBI Bank",
+    "accountNumber": "IDBI0000176651",
+    "type": "current",
+    "branch": "Dombivli"
+  },
+  {
+    "bankName": "IDBI Bank",
+    "accountNumber": "IDBI0000176651",
+    "type": "savings",
+    "branch": "Dombivli"
+  },
+  {
+    "bankName": "IDBI Bank",
+    "accountNumber": "IDBI0000176651",
+    "type": "savings",
+    "branch": "Dombivli"
+  }
+]
