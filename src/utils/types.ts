@@ -102,3 +102,10 @@ export type SearchSavings = {
   savings: ISaving[],
   count: number
 }
+
+export type ICard = {
+  cardNumber: string;
+  expirationDate: string;
+  name: string;
+  type: string;
+};

@@ -12,8 +12,9 @@ import { useGlobalState } from "../../hooks/useGlobalState";
 type IDialogProps = {
   dialogTitle: string;
   children: JSX.Element;
-  dialogBtnLabel: string;
-  dialogBtnHandler: () => void;
+  dialogBtnLabel?: string;
+  dialogBtnHandler?: () => void;
+  dilogBtnRenderer?: JSX.Element;
 } & Omit<DialogProps, "open">;
 
 const BootstrapDialog = styled(MuiDialog)(({ theme }) => ({
@@ -30,6 +31,7 @@ export const Dialog = ({
   children,
   dialogBtnLabel,
   dialogBtnHandler,
+  dilogBtnRenderer,
   ...rest
 }: IDialogProps) => {
   const { openDialog, setOpenDialog } = useGlobalState();
@@ -58,9 +60,11 @@ export const Dialog = ({
         </IconButton>
         <DialogContent dividers>{children}</DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={dialogBtnHandler}>
-            {dialogBtnLabel}
-          </Button>
+          {dilogBtnRenderer ? (
+            dilogBtnRenderer
+          ) : (
+            <Button onClick={dialogBtnHandler}>{dialogBtnLabel}</Button>
+          )}
         </DialogActions>
       </BootstrapDialog>
     </React.Fragment>

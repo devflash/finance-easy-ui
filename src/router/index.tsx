@@ -8,7 +8,7 @@ import { LoginPage } from "../pages/loginPage.tsx";
 import { SignupPage } from "../pages/signupPage.tsx";
 import { DashboardPage } from "../pages/dashboadPage.tsx";
 import { SavingPage } from "../pages/saving.tsx";
-
+import { ProfilePage } from "../pages/Profile.tsx";
 export const router = createBrowserRouter([
   {
     path: "/login",
@@ -61,6 +61,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard",
         element: <DashboardPage />,
+      },
+      {
+        path: "/profile",
+        element: <ProfilePage />,
       },
     ],
   },
