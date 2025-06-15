@@ -1,13 +1,13 @@
 import { Dialog } from "../../common/dialog";
-import { Form, IFormContext } from "../../common/form";
-import { FormData, FormState } from "../../../hooks/useForm";
-import { ICard } from "../../../utils/types";
+import { FormData, FormState, useForm } from "../../../hooks/useForm";
+import { ICardData } from "../../../utils/types";
 import { Input } from "../../common/input";
 import { Select } from "../../common/select";
-import { FormActions } from "../../common/formActions";
-import { Button } from "@mui/material";
-
-const initialState: FormState<ICard> = {
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { addCard } from "../../../services/userServices";
+import { Box } from "@mui/material";
+import { useGlobalState } from "../../../hooks/useGlobalState";
+const initialState: FormState<ICardData> = {
   data: {
     cardNumber: "",
     expirationDate: "",
@@ -15,7 +15,7 @@ const initialState: FormState<ICard> = {
     type: "",
   },
 };
-const formInputs: FormData<ICard> = {
+const formInputs: FormData<ICardData> = {
   cardNumber: {
     name: "cardNumber",
     render: (state, onChange) => (
@@ -92,13 +92,24 @@ const formInputs: FormData<ICard> = {
 };
 
 export const CardForm = () => {
-  const onAddClick = (
-    state: IFormContext<ICard>["formState"],
-    validation: IFormContext<ICard>["validation"]
-  ) => {
+  const { setOpenDialog } = useGlobalState();
+  const { formState, handleValueChange, validation } = useForm(
+    formInputs,
+    initialState
+  );
+  const queryClient = useQueryClient();
+  const mutatation = useMutation({
+    mutationFn: addCard,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["cards"] });
+      setOpenDialog(false);
+    },
+  });
+  const onAddClick = () => {
     validation(
       () => {
-        if (state.data) {
+        if (formState.data) {
+          mutatation.mutate(formState.data);
         }
       },
       (error) => {
@@ -109,15 +120,15 @@ export const CardForm = () => {
   return (
     <Dialog
       dialogTitle="Add Credit/Debit Card"
-      dilogBtnRenderer={
-        <FormActions
-          render={(state, validation) => (
-            <Button onClick={() => onAddClick(state, validation)}>Add</Button>
-          )}
-        />
-      }
+      dialogBtnLabel="Add"
+      dialogBtnHandler={onAddClick}
     >
-      <Form formInputs={formInputs} state={initialState} />
+      <Box>
+        {formInputs.cardNumber.render(formState, handleValueChange)}
+        {formInputs.expirationDate.render(formState, handleValueChange)}
+        {formInputs.type.render(formState, handleValueChange)}
+        {formInputs.name.render(formState, handleValueChange)}
+      </Box>
     </Dialog>
   );
 };

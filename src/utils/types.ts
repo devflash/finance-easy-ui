@@ -1,14 +1,14 @@
-export interface IIncome{
+export type IIncome = {
     _id: string
-    source: string,
-    amount: number,
-    userId: string,
-    date: Date,
-    depositType: string,
-    description:  string,
-    category:  string,
-    createdAt: Date;
-    updateAt: Date;
+    source: string
+    amount: number
+    userId: string
+    date: Date
+    depositType: string
+    description:  string
+    category:  string
+    createdAt: Date
+    updateAt: Date
     type: 'Income'
 }
 
@@ -104,8 +104,17 @@ export type SearchSavings = {
 }
 
 export type ICard = {
+  _id: string
+  userId: string
   cardNumber: string;
   expirationDate: string;
   name: string;
   type: string;
+  createdAt: Date
+  updateAt: Date
 };
+
+export type ICardData = Record<
+  keyof Omit<ICard, "_id" | "userId" | "createdAt" | "updateAt">,
+  string
+>;

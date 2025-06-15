@@ -4,7 +4,7 @@ import { Table, Column } from "../../common/table/Table";
 import { useGlobalState } from "../../../hooks/useGlobalState";
 import { CardForm } from "./CardForm";
 import { ICard } from "../../../utils/types";
-
+import { useGetcards } from "../../../hooks/profile/useGetCards";
 const columns: Column<ICard>[] = [
   {
     id: "cardNumber",
@@ -28,19 +28,16 @@ const columns: Column<ICard>[] = [
   },
 ];
 
-const data: ICard[] = [
-  {
-    cardNumber: "1234 1233 1223 1233",
-    expirationDate: "12/12/2029",
-    type: "Visa",
-    name: "Mrugesh Wadagbalkar",
-  },
-];
 export const CreditCards = () => {
+  const { data } = useGetcards();
   const { setOpenDialog } = useGlobalState();
   const handleAddCard = () => {
     setOpenDialog(true);
   };
+  // ToDo: Improve this to show in table
+  if (!data?.length) {
+    return <p>No cards</p>;
+  }
 
   return (
     <Box bgcolor="#fff" padding="1rem" borderRadius="10px">
