@@ -4,7 +4,7 @@ import _ from "lodash";
 export type FormInput<T> = {
     name: string,
     validation?: Array<(value?: FormState<T> ) => string>
-    render: (state: FormState<T>, onChange: (e: React.ChangeEvent<HTMLInputElement>, v?: number | undefined)=> void) => JSX.Element
+    render: (state: FormState<T>, onChange: (e: React.ChangeEvent<HTMLInputElement>, v?: number | undefined)=> void) => JSX.Element | null
 }
 
 export type FormData<T> = Record<string, FormInput<T>>

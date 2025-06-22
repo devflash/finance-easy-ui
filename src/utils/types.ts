@@ -136,4 +136,4 @@ export type IBankAccountsData = Record<
   string
 >;
 
-export type IPaymentMethods = IBankAccounts & {methodType: "Bank"} | ICard & {methodType: "Card"}
+export type IPaymentMethods = IBankAccounts & {methodType: "bank"} | ICard & {methodType: "card"}

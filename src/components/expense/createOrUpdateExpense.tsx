@@ -12,10 +12,11 @@ import {
 import { createExpenses, updateExpenses } from "../../services/expenseService";
 import { useNavigate } from "react-router-dom";
 import { FormData, FormState } from "../../hooks/useForm";
-import { IExpense, ExpenseData } from "../../utils/types";
+import { IExpense, ExpenseData, IPaymentMethods } from "../../utils/types";
 import { Form, IFormContext } from "../common/form";
 import { useGetExpenseById } from "../../hooks/expense/useGetExpenseById";
 import { useParams } from "react-router-dom";
+import { useGetPaymentMethods } from "../../hooks/profile/useGetPaymentMethods";
 
 type CreateExpenseProps = { action: "CREATE" | "UPDATE" };
 
@@ -45,7 +46,9 @@ type ExpenseFormProps = {
   ) => void;
 };
 
-const formData: FormData<ExpenseData> = {
+const formData = (
+  paymentMethods: IPaymentMethods[]
+): FormData<ExpenseData> => ({
   moneyPaidTo: {
     name: "moneyPaidTo",
     validation: [
@@ -87,7 +90,7 @@ const formData: FormData<ExpenseData> = {
       />
     ),
   },
-  depositType: {
+  paymentMethod: {
     name: "paymentMethod",
     validation: [
       (state) =>
@@ -103,7 +106,8 @@ const formData: FormData<ExpenseData> = {
         subLabelText="Please select the Payment method type"
         options={[
           { label: "Cash", value: "cash" },
-          { label: "Bank account", value: "bankAccount" },
+          { label: "Bank account", value: "bank" },
+          { label: "Card", value: "card" },
         ]}
         required
         error={state?.errors?.paymentMethod?.isError}
@@ -111,6 +115,54 @@ const formData: FormData<ExpenseData> = {
         onChange={onChange}
       />
     ),
+  },
+  paymentMethodId: {
+    name: "paymentMethodId",
+    validation: [
+      (state) =>
+        state?.data?.paymentMethod &&
+        ["bank", "card"].includes(state.data?.paymentMethod) &&
+        state?.data?.paymentMethodId === ""
+          ? "Payment method is required"
+          : "",
+    ],
+    render: (state, onChange) => {
+      const methods = paymentMethods.filter(
+        (method) => method.methodType === state.data?.paymentMethod
+      );
+      const options = methods.map((method) => {
+        if (method.methodType === "bank") {
+          return {
+            label: method.bankName,
+            value: method._id,
+          };
+        }
+        return {
+          label: method.cardNumber,
+          value: method._id,
+        };
+      });
+      return state?.data?.paymentMethod &&
+        ["bank", "card"].includes(state.data?.paymentMethod) ? (
+        <Select
+          name="paymentMethodId"
+          value={state.data?.paymentMethodId}
+          label={
+            state.data?.paymentMethod === "card" ? "Select Card" : "Select Bank"
+          }
+          subLabelText={
+            state.data?.paymentMethod === "card"
+              ? "Please select Card"
+              : "Please select Bank"
+          }
+          options={options}
+          required
+          error={state?.errors?.paymentMethodId?.isError}
+          errorText={state?.errors?.paymentMethodId?.errorMessage}
+          onChange={onChange}
+        />
+      ) : null;
+    },
   },
   category: {
     name: "category",
@@ -168,7 +220,7 @@ const formData: FormData<ExpenseData> = {
       />
     ),
   },
-};
+});
 
 export const CreateOrUpdateExpense = ({ action }: CreateExpenseProps) => {
   return action === "CREATE" ? <CreateExpense /> : <UpdateExpense />;
@@ -183,6 +235,7 @@ const CreateExpense = () => {
       amount: "",
       date: "",
       description: "",
+      paymentMethodId: "",
     },
     errors: {},
   };
@@ -232,6 +285,7 @@ const UpdateExpense = () => {
       amount: String(data?.amount) || "",
       category: data?.category || "",
       paymentMethod: data?.paymentMethod || "",
+      paymentMethodId: data?.paymentMethodId || "",
       description: data?.description || "",
       date: data?.date ? new Date(data.date).toISOString().split("T")[0] : "",
     },
@@ -290,7 +344,7 @@ const ExpenseForm = ({
 }: ExpenseFormProps) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-
+  const { data } = useGetPaymentMethods();
   const mutation = useMutation({
     mutationFn: mutationFn,
     onSuccess: () => {
@@ -312,7 +366,7 @@ const ExpenseForm = ({
       </Typography>
       <Box>
         <Form
-          formInputs={formData}
+          formInputs={formData(data || [])}
           state={initialState}
           formActions={
             <FormActions<ExpenseData>
