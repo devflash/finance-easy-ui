@@ -60,8 +60,8 @@ const formInputs: FormData<ICardData> = {
         name="type"
         label="Card type"
         options={[
-          { label: "Credit Card", value: "cd" },
-          { label: "Debit Card", value: "db" },
+          { label: "Credit Card", value: "cc" },
+          { label: "Debit Card", value: "dc" },
         ]}
         onChange={onChange}
         error={state.errors?.type?.isError}

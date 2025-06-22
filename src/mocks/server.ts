@@ -6,6 +6,7 @@ import expenses from './jsons/expenses.json'
 import savings from './jsons/savings.json';
 import cards from './jsons/cards.json'
 import banks from './jsons/banks.json'
+import paymentmethod from './jsons/payment-methods.json'
 
 type IConfig = {
   environment?: string
@@ -186,6 +187,10 @@ export function makeServer(config: IConfig= {}) {
         schema.create('banks', body)
         return new Response(200, {}, {body})
       });
+
+      this.get('user/payment-methods', ()=>{
+        return paymentmethod
+      })
 
 
       this.passthrough()

@@ -1,0 +1,32 @@
+[
+    {
+        "_id": "684f1b27983a7e99876801f8",
+        "bankName": "ICICI Bank",
+        "accountNumber": "7878676767676767",
+        "branch": "Dombivli",
+        "type": "saving",
+        "userId": "66a3c726073457997df9859a",
+        "__v": 0,
+        "methodType": "bank"
+    },
+    {
+        "_id": "68548290e283b6fd06c4274f",
+        "cardNumber": "7878787612341234",
+        "expirationDate": "2029-01-01T00:00:00.000Z",
+        "name": "Mrugesh Wadagbalkar",
+        "type": "cc",
+        "userId": "66a3c726073457997df9859a",
+        "__v": 0,
+        "methodType": "card"
+    },
+    {
+        "_id": "685482a3e283b6fd06c42751",
+        "cardNumber": "5345767267632877",
+        "expirationDate": "2034-01-01T00:00:00.000Z",
+        "name": "Mrugesh Wadagbalkar",
+        "type": "dc",
+        "userId": "66a3c726073457997df9859a",
+        "__v": 0,
+        "methodType": "card"
+    }
+]

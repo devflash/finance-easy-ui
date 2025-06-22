@@ -8,7 +8,7 @@ export const getExpenses = async (): Promise<IExpense[]> => {
 
 export const searchExpenses = async (queryParams: URLSearchParams): Promise<SearchExpenses> => {
     const response = await axiosInstance.get("api/v1/expense/search", {params: queryParams});
-    return response.data.expenses;
+    return response.data;
 };
 
 export const createExpenses = async (payload: {expense: ExpenseData}): Promise<IExpense> => {

@@ -17,6 +17,7 @@ export type IExpense = {
   category: string,
   moneyPaidTo: string,
   paymentMethod: string,
+  paymentMethodId: string
   amount: number,
   date: Date,
   description: string,
@@ -134,3 +135,5 @@ export type IBankAccountsData = Record<
   keyof Omit<IBankAccounts, "_id" | "userId" | "createdAt" | "updateAt">,
   string
 >;
+
+export type IPaymentMethods = IBankAccounts & {methodType: "Bank"} | ICard & {methodType: "Card"}
