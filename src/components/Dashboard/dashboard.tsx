@@ -10,15 +10,12 @@ import {
   CartesianGrid,
   LineChart,
   Line,
-  BarChart,
-  Bar,
 } from "recharts";
-import {
-  incomesVsExpenses,
-  savingsVsExpense,
-  networth,
-} from "../../mocks/jsons/dashboard.json";
+import { networth } from "../../mocks/jsons/dashboard.json";
 import { TopSpendings } from "./TopSpendings";
+import { BankSpendings } from "./BankSpendings";
+import { CardSpendings } from "./CardSpendings";
+import { Summary } from "./Summary";
 export const Dashboard = () => {
   return (
     <Box>
@@ -33,7 +30,7 @@ export const Dashboard = () => {
       </Box>
       <Box display="flex" marginTop="1rem">
         <ResponsiveContainer
-          width="90%"
+          width="100%"
           height={200}
           style={{
             borderRadius: "10px",
@@ -41,7 +38,7 @@ export const Dashboard = () => {
             padding: "16px",
           }}
         >
-          <BarChart
+          <LineChart
             width={500}
             height={300}
             data={networth}
@@ -57,85 +54,89 @@ export const Dashboard = () => {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="nw" fill="#8884d8" />
-          </BarChart>
-        </ResponsiveContainer>
-      </Box>
-      {/* Income vs savings */}
-      <Box display="flex" marginTop="1rem">
-        <ResponsiveContainer
-          width="90%"
-          height={200}
-          style={{
-            borderRadius: "10px",
-            boxShadow: "1px 2px 7px 0px",
-            padding: "16px",
-          }}
-        >
-          <LineChart
-            width={500}
-            height={300}
-            data={incomesVsExpenses}
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5,
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line
-              type="monotone"
-              dataKey="iv"
-              stroke="#8884d8"
-              activeDot={{ r: 8 }}
-            />
-            <Line type="monotone" dataKey="ev" stroke="#82ca9d" />
+            <Line dataKey="nw" fill="#8884d8" />
           </LineChart>
         </ResponsiveContainer>
       </Box>
-      {/* Savings vs Expenses */}
-      <Box display="flex" marginTop="1rem">
-        <ResponsiveContainer
-          width="90%"
-          height={200}
-          style={{
-            borderRadius: "10px",
-            boxShadow: "1px 2px 7px 0px",
-            padding: "16px",
-          }}
-        >
-          <LineChart
-            width={500}
-            height={300}
-            data={savingsVsExpense}
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5,
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line
-              type="monotone"
-              dataKey="sv"
-              stroke="#8884d8"
-              activeDot={{ r: 8 }}
-            />
-            <Line type="monotone" dataKey="ev" stroke="#82ca9d" />
-          </LineChart>
-        </ResponsiveContainer>
-      </Box>
+      <BankSpendings />
+      <CardSpendings />
+      <Summary />
       <TopSpendings />
     </Box>
   );
 };
+
+//  {/* Income vs savings */}
+//       <Box display="flex" marginTop="1rem">
+//         <ResponsiveContainer
+//           width="90%"
+//           height={200}
+//           style={{
+//             borderRadius: "10px",
+//             boxShadow: "1px 2px 7px 0px",
+//             padding: "16px",
+//           }}
+//         >
+//           <LineChart
+//             width={500}
+//             height={300}
+//             data={incomesVsExpenses}
+//             margin={{
+//               top: 5,
+//               right: 30,
+//               left: 20,
+//               bottom: 5,
+//             }}
+//           >
+//             <CartesianGrid strokeDasharray="3 3" />
+//             <XAxis dataKey="name" />
+//             <YAxis />
+//             <Tooltip />
+//             <Legend />
+//             <Line
+//               type="monotone"
+//               dataKey="iv"
+//               stroke="#8884d8"
+//               activeDot={{ r: 8 }}
+//             />
+//             <Line type="monotone" dataKey="ev" stroke="#82ca9d" />
+//           </LineChart>
+//         </ResponsiveContainer>
+//       </Box>
+//       {/* Savings vs Expenses */}
+//       <Box display="flex" marginTop="1rem">
+//         <ResponsiveContainer
+//           width="90%"
+//           height={200}
+//           style={{
+//             borderRadius: "10px",
+//             boxShadow: "1px 2px 7px 0px",
+//             padding: "16px",
+//           }}
+//         >
+//           <LineChart
+//             width={500}
+//             height={300}
+//             data={savingsVsExpense}
+//             margin={{
+//               top: 5,
+//               right: 30,
+//               left: 20,
+//               bottom: 5,
+//             }}
+//           >
+//             <CartesianGrid strokeDasharray="3 3" />
+//             <XAxis dataKey="name" />
+//             <YAxis />
+//             <Tooltip />
+//             <Legend />
+//             <Line
+//               type="monotone"
+//               dataKey="sv"
+//               stroke="#8884d8"
+//               activeDot={{ r: 8 }}
+//             />
+//             <Line type="monotone" dataKey="ev" stroke="#82ca9d" />
+//           </LineChart>
+//         </ResponsiveContainer>
+//       </Box>
