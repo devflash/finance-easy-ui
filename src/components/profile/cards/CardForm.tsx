@@ -2,7 +2,7 @@ import { Dialog } from "../../common/dialog";
 import { FormData, FormState, useForm } from "../../../hooks/useForm";
 import { ICardData } from "../../../utils/types";
 import { Input } from "../../common/input";
-import { Select } from "../../common/select";
+import { CustomSelect } from "../../common/select";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addCard } from "../../../services/userServices";
 import { Box } from "@mui/material";
@@ -55,7 +55,7 @@ const formInputs: FormData<ICardData> = {
   type: {
     name: "type",
     render: (state, onChange) => (
-      <Select
+      <CustomSelect
         value={state.data?.type}
         name="type"
         label="Card type"

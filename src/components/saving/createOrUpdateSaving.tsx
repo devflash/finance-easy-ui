@@ -2,7 +2,7 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { Input } from "../common/input";
-import { Select } from "../common/select";
+import { CustomSelect } from "../common/select";
 import { FormActions } from "../common/formActions";
 import {
   useMutation,
@@ -72,7 +72,7 @@ const formData: FormData<SavingData> = {
         state?.data?.investmentType === "" ? "Saving type is mandatory" : "",
     ],
     render: (state, onChange) => (
-      <Select
+      <CustomSelect
         name="type"
         value={state.data?.investmentType}
         label="Investment type"

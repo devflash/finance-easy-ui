@@ -2,7 +2,7 @@ import { Dialog } from "../common/dialog";
 import { useForm, FormData, FormState } from "../../hooks/useForm";
 import Box from "@mui/material/Box";
 import { Input } from "../common/input";
-import { Select } from "../common/select";
+import { CustomSelect } from "../common/select";
 import { useSearchParams } from "react-router-dom";
 import { useGlobalState } from "../../hooks/useGlobalState";
 
@@ -36,7 +36,7 @@ const formInputs: FormData<IExpenseFilter> = {
   category: {
     name: "category",
     render: (state, onChange) => (
-      <Select
+      <CustomSelect
         name="category"
         value={state.data?.category}
         label="Category"

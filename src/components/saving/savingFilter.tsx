@@ -1,6 +1,6 @@
 import { Dialog } from "../common/dialog";
 import { useForm, FormData, FormState } from "../../hooks/useForm";
-import { Select } from "../common/select";
+import { CustomSelect } from "../common/select";
 import Box from "@mui/material/Box";
 import { Input } from "../common/input";
 import { useSearchParams } from "react-router-dom";
@@ -23,7 +23,7 @@ const formInputs: FormData<ISavingFilter> = {
   type: {
     name: "type",
     render: (state, onChange) => (
-      <Select
+      <CustomSelect
         name="investmentType"
         value={state.data?.investmentType}
         label="Investment type"

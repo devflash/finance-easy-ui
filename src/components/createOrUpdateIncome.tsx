@@ -1,8 +1,9 @@
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { Input } from "./common/input";
-import { Select } from "./common/select";
+import { CustomInput } from "./common/inputNew";
+
+import { CustomSelect } from "./common/select";
 import { FormActions } from "./common/formActions";
 import {
   useMutation,
@@ -50,11 +51,10 @@ const formData: FormData<IncomeData> = {
       (state) => (state?.data?.source === "" ? "Source is mandatory" : ""),
     ],
     render: (state, onChange) => (
-      <Input
+      <CustomInput
         value={state.data?.source}
         name="source"
         label="Income source"
-        subLabelText="Please enter the source name from where the income is received"
         onChange={onChange}
         required
         error={state?.errors?.source?.isError}
@@ -71,11 +71,10 @@ const formData: FormData<IncomeData> = {
         Number(state?.data?.amount) < 0 ? "Amount should be positive" : "",
     ],
     render: (state, onChange) => (
-      <Input
+      <CustomInput
         value={state.data?.amount}
         name="amount"
         label="Amount"
-        subLabelText="Please enter the received amout"
         type="number"
         onChange={onChange}
         required
@@ -91,11 +90,10 @@ const formData: FormData<IncomeData> = {
         state?.data?.depositType === "" ? "Deposite type is mandatory" : "",
     ],
     render: (state, onChange) => (
-      <Select
+      <CustomSelect
         name="depositType"
         value={state.data?.depositType}
         label="Deposite Type"
-        subLabelText="Please select the type of deposite"
         options={[
           { label: "Cash", value: "cash" },
           { label: "Bank account", value: "bankAccount" },
@@ -113,11 +111,10 @@ const formData: FormData<IncomeData> = {
       (state) => (state?.data?.category === "" ? "Category is mandatory" : ""),
     ],
     render: (state, onChange) => (
-      <Select
+      <CustomSelect
         name="category"
         value={state.data?.category}
         label="Category"
-        subLabelText="Please select the catehory of the income"
         options={[{ label: "Salary", value: "salary" }]}
         onChange={onChange}
         required
@@ -129,11 +126,10 @@ const formData: FormData<IncomeData> = {
   description: {
     name: "description",
     render: (state, onChange) => (
-      <Input
+      <CustomInput
         name="description"
         value={state.data?.description}
         label="Notes"
-        subLabelText="Please enter the short description about the income"
         multiline
         rows={4}
         maxRows={4}
@@ -147,11 +143,10 @@ const formData: FormData<IncomeData> = {
       (state) => (state?.data?.date === "" ? "Income date is mandatory" : ""),
     ],
     render: (state, onChange) => (
-      <Input
+      <CustomInput
         name="date"
         value={state.data?.date}
         label="Income Date"
-        subLabelText="Please select the date when the income is received"
         type="date"
         required
         error={state?.errors?.date?.isError}

@@ -2,7 +2,7 @@ import { Dialog } from "../../common/dialog";
 import { FormData, FormState, useForm } from "../../../hooks/useForm";
 import { IBankAccountsData } from "../../../utils/types";
 import { Input } from "../../common/input";
-import { Select } from "../../common/select";
+import { CustomSelect } from "../../common/select";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addBank } from "../../../services/userServices";
 import { Box } from "@mui/material";
@@ -39,7 +39,7 @@ const formInputs: FormData<IBankAccountsData> = {
   bankName: {
     name: "bankName",
     render: (state, onChange) => (
-      <Select
+      <CustomSelect
         value={state.data?.bankName}
         name="bankName"
         label="Bank Name"
@@ -77,7 +77,7 @@ const formInputs: FormData<IBankAccountsData> = {
   type: {
     name: "type",
     render: (state, onChange) => (
-      <Select
+      <CustomSelect
         value={state.data?.type}
         name="type"
         label="Bank Name"

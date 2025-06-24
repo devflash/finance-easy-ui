@@ -2,7 +2,7 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { Input } from "../common/input";
-import { Select } from "../common/select";
+import { CustomSelect } from "../common/select";
 import { FormActions } from "../common/formActions";
 import {
   useMutation,
@@ -99,7 +99,7 @@ const formData = (
           : "",
     ],
     render: (state, onChange) => (
-      <Select
+      <CustomSelect
         name="paymentMethod"
         value={state.data?.paymentMethod}
         label="Payment Method"
@@ -144,7 +144,7 @@ const formData = (
       });
       return state?.data?.paymentMethod &&
         ["bank", "card"].includes(state.data?.paymentMethod) ? (
-        <Select
+        <CustomSelect
           name="paymentMethodId"
           value={state.data?.paymentMethodId}
           label={
@@ -170,7 +170,7 @@ const formData = (
       (state) => (state?.data?.category === "" ? "Category is mandatory" : ""),
     ],
     render: (state, onChange) => (
-      <Select
+      <CustomSelect
         name="category"
         value={state.data?.category}
         label="Category"
