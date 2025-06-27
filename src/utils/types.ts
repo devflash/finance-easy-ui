@@ -39,24 +39,21 @@ export type ExpenseData = Record<
 
 export type IBudget = {
   _id: string
-  budgetDetails: {
-    budgetName: string
-    startDate: Date,
-    endDate: Date,
-  }
-  budgetAllocation: {
-    isExpectedAmount: boolean
-    availableBudgetAmount: number,
-    expectedAmount: number
-    percentages: {
-      needs: number,
-      wants: number,
-      savings: number
-    }
-  },
-  status: string;
-  createdAt: Date;
-  updateAt: Date;
+    userId: string
+    startDate: Date;
+    endDate: Date;
+    totalBudget: number,
+    totalActual: number
+    budget: BudgetItem[]
+    createdAt: Date
+    updateAt: Date
+}
+
+type BudgetItem = {
+    category: string,
+    actualAmount: number,
+    budgetAmount: number,
+    type: 'NEED' | 'WANT' | 'SAVING'
 }
 
 type ConvertToString<T> = {
@@ -79,6 +76,11 @@ export type SearchIncomes = {
 
 export type SearchExpenses = {
   expenses: IExpense[],
+  count: number
+}
+
+export type SearchBudgets = {
+  budgets: IBudget[],
   count: number
 }
 

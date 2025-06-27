@@ -1,0 +1,19 @@
+[{
+    "_id": "685d274c669a011164deda51",
+    "startDate": "2024-01-03T00:00:00.000Z",
+    "endDate": "2024-01-31T00:00:00.000Z",
+    "totalBudget": 250,
+    "totalActual": 0,
+    "budget": [
+        {
+            "category": "clothing",
+            "actualAmount": 0,
+            "budgetAmount": 250,
+            "type": "NEED",
+            "_id": "685d274c669a011164deda52"
+        }
+    ],
+    "createdAt": "2025-06-26T10:56:12.927Z",
+    "updatedAt": "2025-06-26T10:56:12.927Z",
+    "__v": 0
+}]

@@ -4,44 +4,36 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
 import { IBudget } from "../../utils/types";
-import { useFetchBudgets } from "../../hooks/useFetchBudgets";
-import { Typography } from "@mui/material";
+import { useSearchBudgets } from "../../hooks/budget/useSearchBudgets";
+import { useSearchParams } from "react-router-dom";
 
 const columns: Column<IBudget>[] = [
   {
-    id: "budgetName",
-    label: "Budget Name",
-    render: (budget) => <span>{budget.budgetDetails.budgetName}</span>,
-  },
-  {
-    id: "dateRange",
-    label: "Date Range",
-    render: (budget) => {
-      const startDate = new Date(budget.budgetDetails.startDate).toDateString();
-      const endDate = new Date(budget.budgetDetails.endDate).toDateString();
-      return <span>{`${startDate} - ${endDate}`}</span>;
-    },
-  },
-  {
-    id: "status",
-    label: "Status",
-    render: () => (
-      <Typography
-        component="span"
-        sx={{
-          color: "success.main",
-        }}
-      >
-        On track
-      </Typography>
-    ),
-  },
-  {
-    id: "budgetAmount",
-    label: "Budget Amount",
+    id: "startDate",
+    label: "Start Date",
     render: (budget) => (
-      <span>{budget.budgetAllocation.availableBudgetAmount}</span>
+      <span>{new Date(budget.startDate).toDateString()}</span>
     ),
+  },
+  {
+    id: "endDate",
+    label: "End Date",
+    render: (budget) => <span>{new Date(budget.endDate).toDateString()}</span>,
+  },
+  {
+    id: "budget",
+    label: "Budget",
+    render: (budget) => <span>{budget.totalBudget}</span>,
+  },
+  {
+    id: "actual",
+    label: "Actual",
+    render: (budget) => <span>{budget.totalActual}</span>,
+  },
+  {
+    id: "remaining",
+    label: "Remaining",
+    render: (budget) => <span>{budget.totalBudget - budget.totalActual}</span>,
   },
   {
     id: "actions",
@@ -60,15 +52,17 @@ const columns: Column<IBudget>[] = [
 ];
 
 export const Budgets = () => {
-  const { data } = useFetchBudgets();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  if (!data?.length) {
+  const { data } = useSearchBudgets(searchParams);
+
+  if (!data?.budgets.length) {
     return <p>No budgets available</p>;
   }
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Table data={data} columns={columns} />
+      <Table data={data.budgets} columns={columns} />
     </Box>
   );
 };

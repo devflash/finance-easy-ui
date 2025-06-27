@@ -1,5 +1,5 @@
 import {axiosInstance} from './axios'
-import {BudgetData, IBudget} from '../utils/types'
+import {BudgetData, IBudget, SearchBudgets} from '../utils/types'
 
 export const createBudget = async (budget:BudgetData): Promise<IBudget> => {
     const response = await axiosInstance.post("api/v1/budgets/create", budget);
@@ -10,3 +10,8 @@ export const getBudgets  = async (): Promise<IBudget[]> => {
     const response = await axiosInstance.get("api/v1/budgets/all");
     return response.data.budgets
 }
+
+export const searchBudgets = async (queryParams: URLSearchParams): Promise<SearchBudgets> => {
+    const response = await axiosInstance.get("api/v1/budget/search", {params: queryParams});
+    return response.data;
+};
