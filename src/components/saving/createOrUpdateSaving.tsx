@@ -16,6 +16,7 @@ import { ISaving, SavingData } from "../../utils/types";
 import { Form, IFormContext } from "../common/form";
 import { useGetSavingById } from "../../hooks/saving/useGetSavingById";
 import { useParams } from "react-router-dom";
+import { savingsOptions } from "../../utils/util";
 
 type CreateSavingProps = { action: "CREATE" | "UPDATE" };
 
@@ -77,10 +78,7 @@ const formData: FormData<SavingData> = {
         value={state.data?.investmentType}
         label="Investment type"
         subLabelText="Please select the Investment type"
-        options={[
-          { label: "Mutual Fund", value: "mf" },
-          { label: "Fixed Deposit", value: "fd" },
-        ]}
+        options={savingsOptions}
         required
         error={state?.errors?.investmentType?.isError}
         errorText={state?.errors?.investmentType?.errorMessage}

@@ -27,3 +27,65 @@ export function isStrongPassword(password?:string) {
 }
 
 export const PAGE_LIMIT= 5
+
+export const savingsOptions = [ {
+    label: "Emergency Fund",
+    value: "EMERGENCY_FUND",
+  },
+  {
+    label: "Retirement Savings",
+    value: "RETIREMENT_SAVINGS",
+  },
+  {
+    label: "Mutual Fund",
+    value: "MUTUAL_FUNDS",
+  },
+  {
+    label: "Fixed Deposite",
+    value: "FIXED_DEPOSITE",
+  }]
+
+export const categories = [
+  {
+    label: "Rent",
+    value: "RENT",
+  },
+  {
+    label: "Utilities",
+    value: "UTILITIES",
+  },
+  {
+    label: "Groceries",
+    value: "GROCERIES",
+  },
+  {
+    label: "Transportation",
+    value: "TRANSPORTATION",
+  },
+  {
+    label: "Insurance",
+    value: "INSURANCE",
+  },
+  {
+    label: "Dining Out",
+    value: "DINING_OUT",
+  },
+  {
+    label: "Entertainment",
+    value: "ENTERTAINMENT",
+  },
+  {
+    label: "Shopping",
+    value: "SHOPPING",
+  },
+  {
+    label: "Vacations",
+    value: "VACATIONS",
+  },
+  {
+    label: "Leisure",
+    value: "LEISURE",
+  },
+  ...savingsOptions
+];
+

@@ -5,29 +5,8 @@ import { CustomInput } from "../common/inputNew";
 import { Dialog } from "../common/dialog";
 import { useGlobalState } from "../../hooks/useGlobalState";
 import { BudgetItem } from "./createBudget";
+import { categories } from "../../utils/util";
 
-const options = [
-  {
-    label: "Rent / Mortgage",
-    value: "RENT_MORTGAGE",
-  },
-  {
-    label: "Utilities",
-    value: "UTILITIES",
-  },
-  {
-    label: "Groceries",
-    value: "GROCERIES",
-  },
-  {
-    label: "Transportation",
-    value: "TRANSPORTATION",
-  },
-  {
-    label: "Insurance",
-    value: "INSURANCE",
-  },
-];
 type CategoryDialogProp = {
   editable: string;
   selectedCategories: BudgetItem[];
@@ -44,11 +23,16 @@ const initialState = {
     value: "",
     error: "",
   },
+  type: {
+    value: "",
+    error: "",
+  },
 };
 
 type IState = typeof initialState;
 
 const validNumber = /^\d+$/;
+
 export const CategoryDialogForm = ({
   editable,
   selectedCategories,
@@ -72,6 +56,10 @@ export const CategoryDialogForm = ({
           value: String(item?.budget) || "",
           error: "",
         },
+        type: {
+          value: item?.type || "",
+          error: "",
+        },
       });
     }
   }, [editable, selectedCategories]);
@@ -90,6 +78,10 @@ export const CategoryDialogForm = ({
     let result = true;
     if (!state.category.value) {
       updateError("category", "Category is required");
+      result = false;
+    }
+    if (!state.type.value) {
+      updateError("type", "Type is required");
       result = false;
     }
     if (!state.budget.value) {
@@ -112,10 +104,12 @@ export const CategoryDialogForm = ({
       ? updateCategory({
           category: state.category.value,
           budget: Number(state.budget.value),
+          type: state.type.value as "NEED" | "WANT" | "SAVING",
         })
       : addCategory({
           category: state.category.value,
           budget: Number(state.budget.value),
+          type: state.type.value as "NEED" | "WANT" | "SAVING",
         });
     setOpenDialogKey("");
     setState(initialState);
@@ -132,8 +126,9 @@ export const CategoryDialogForm = ({
     });
   };
 
+  console.log(categories);
   const filteredOptions = useMemo(() => {
-    return options.filter(
+    return categories.filter(
       (o) =>
         selectedCategories.findIndex(
           (s) => s.category === o.value && s.category !== editable
@@ -141,6 +136,7 @@ export const CategoryDialogForm = ({
     );
   }, [editable, selectedCategories]);
 
+  console.log(filteredOptions);
   return (
     <Dialog
       dialogTitle="Category"
@@ -174,6 +170,31 @@ export const CategoryDialogForm = ({
           required
           error={!!state.budget.error}
           errorText={state.budget.error}
+        />
+        <CustomSelect
+          value={state.type.value}
+          name="type"
+          label="Type"
+          options={[
+            {
+              label: "Need",
+              value: "NEED",
+            },
+            {
+              label: "Want",
+              value: "WANT",
+            },
+            {
+              label: "Saving",
+              value: "SAVING",
+            },
+          ]}
+          onChange={(e) =>
+            handleValueChange(e.target.name as keyof IState, e.target.value)
+          }
+          required
+          error={!!state.category.error.length}
+          errorText={state.category.error}
         />
       </Box>
     </Dialog>

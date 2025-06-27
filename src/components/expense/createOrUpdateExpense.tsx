@@ -17,6 +17,7 @@ import { Form, IFormContext } from "../common/form";
 import { useGetExpenseById } from "../../hooks/expense/useGetExpenseById";
 import { useParams } from "react-router-dom";
 import { useGetPaymentMethods } from "../../hooks/profile/useGetPaymentMethods";
+import { categories } from "../../utils/util";
 
 type CreateExpenseProps = { action: "CREATE" | "UPDATE" };
 
@@ -103,7 +104,6 @@ const formData = (
         name="paymentMethod"
         value={state.data?.paymentMethod}
         label="Payment Method"
-        subLabelText="Please select the Payment method type"
         options={[
           { label: "Cash", value: "cash" },
           { label: "Bank account", value: "bank" },
@@ -150,11 +150,6 @@ const formData = (
           label={
             state.data?.paymentMethod === "card" ? "Select Card" : "Select Bank"
           }
-          subLabelText={
-            state.data?.paymentMethod === "card"
-              ? "Please select Card"
-              : "Please select Bank"
-          }
           options={options}
           required
           error={state?.errors?.paymentMethodId?.isError}
@@ -174,11 +169,7 @@ const formData = (
         name="category"
         value={state.data?.category}
         label="Category"
-        subLabelText="Please select the catehory of the income"
-        options={[
-          { label: "Grocery", value: "grocery" },
-          { label: "Light Bill", value: "lightBill" },
-        ]}
+        options={categories}
         onChange={onChange}
         required
         error={state?.errors?.category?.isError}

@@ -4,6 +4,7 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { CustomInput } from "../common/inputNew";
 import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
@@ -13,6 +14,7 @@ import { useGlobalState } from "../../hooks/useGlobalState";
 export type BudgetItem = {
   category: string;
   budget: number;
+  type: "NEED" | "WANT" | "SAVING";
 };
 
 const initialData: BudgetItem[] = [];
@@ -88,11 +90,11 @@ export const CreateBudget = () => {
                 No Categories are selected for the budget allocation
               </Typography>
             )}
-            {categories.map(({ category, budget }) => (
+            {categories.map(({ category, budget, type }) => (
               <Box
                 key={category}
                 boxShadow="rgba(0,0,0,0.2) 0px 1px 4px"
-                bgcolor="lightcyan"
+                bgcolor="#f3908e"
                 padding="1rem"
                 borderRadius="10px"
                 flex="1 1 25%"
@@ -113,9 +115,12 @@ export const CreateBudget = () => {
                   <HomeOutlinedIcon />
                 </Box>
                 <Box flexGrow="1">
-                  <Box>
-                    <Typography component="p">{category}</Typography>
-                    <Typography component="p">{budget}</Typography>
+                  <Box display="flex" justifyContent="space-between">
+                    <Box>
+                      <Typography component="p">{category}</Typography>
+                      <Typography component="p">{budget}</Typography>
+                    </Box>
+                    <Chip label={type} color="primary" variant="filled" />
                   </Box>
                   <Box display="flex" gap="0.5rem" justifyContent="flex-end">
                     <Button
