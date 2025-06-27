@@ -1,10 +1,10 @@
-import { Table, Column } from "./common/table/Table";
+import { Table, Column } from "../common/table/Table";
 import Box from "@mui/material/Box";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
-import { IBudget } from "../utils/types";
-import { useFetchBudgets } from "../hooks/useFetchBudgets";
+import { IBudget } from "../../utils/types";
+import { useFetchBudgets } from "../../hooks/useFetchBudgets";
 import { Typography } from "@mui/material";
 
 const columns: Column<IBudget>[] = [

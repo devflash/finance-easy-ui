@@ -9,6 +9,7 @@ import { SignupPage } from "../pages/signupPage.tsx";
 import { DashboardPage } from "../pages/dashboadPage.tsx";
 import { SavingPage } from "../pages/saving.tsx";
 import { ProfilePage } from "../pages/Profile.tsx";
+import { CreateBudget } from "../components/budget/createBudget.tsx";
 export const router = createBrowserRouter([
   {
     path: "/login",
@@ -44,7 +45,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/budget/create",
-        element: <CreatePage type="budget" action="CREATE" />,
+        element: <CreateBudget />,
       },
       {
         path: "/income/update/:incomeId",

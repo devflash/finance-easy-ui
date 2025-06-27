@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
-import { Budgets } from "../components/budgets";
+import { Budgets } from "../components/budget/budgets";
 import { useNavigate } from "react-router-dom";
 
 export const BudgetsPage = () => {
