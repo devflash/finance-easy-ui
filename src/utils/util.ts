@@ -89,3 +89,20 @@ export const categories = [
   ...savingsOptions
 ];
 
+export const categories_types = {
+    RENT: 'NEED',
+    UTILITIES: 'NEED',
+    GROCERIES: 'NEED',
+    TRANSPORTATION: 'NEED',
+    INSURANCE: 'NEED',
+    DINING_OUT: 'WANT',
+    ENTERTAINMENT: 'WANT',
+    SHOPPING: 'WANT',
+    VACATION: 'WANT',
+    LEISURE: 'WANT',
+    EMERGENCY_FUND: 'SAVING',
+    RETIREMENT_FUND: 'SAVING',
+    EDUCATION_FUND: 'SAVING',
+    MUTUAL_FUND: 'SAVING',
+    FIXED_DEPOSIT: 'SAVING'
+} as const

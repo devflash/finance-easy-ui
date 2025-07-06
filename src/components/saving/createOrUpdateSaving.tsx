@@ -66,22 +66,21 @@ const formData: FormData<SavingData> = {
       />
     ),
   },
-  investmentType: {
+  category: {
     name: "type",
     validation: [
       (state) =>
-        state?.data?.investmentType === "" ? "Saving type is mandatory" : "",
+        state?.data?.category === "" ? "Saving type is mandatory" : "",
     ],
     render: (state, onChange) => (
       <CustomSelect
         name="type"
-        value={state.data?.investmentType}
+        value={state.data?.category}
         label="Investment type"
-        subLabelText="Please select the Investment type"
         options={savingsOptions}
         required
-        error={state?.errors?.investmentType?.isError}
-        errorText={state?.errors?.investmentType?.errorMessage}
+        error={state?.errors?.category?.isError}
+        errorText={state?.errors?.category?.errorMessage}
         onChange={onChange}
       />
     ),
@@ -129,7 +128,7 @@ export const CreateOrUpdateSaving = ({ action }: CreateSavingProps) => {
 const CreateSaving = () => {
   const initialState = {
     data: {
-      investmentType: "",
+      category: "",
       amount: "",
       date: "",
       description: "",
@@ -178,7 +177,7 @@ const UpdateSaving = () => {
   console.log(data);
   const initialState = {
     data: {
-      investmentType: data?.investmentType || "",
+      category: data?.category || "",
       amount: String(data?.amount) || "",
       description: data?.description || "",
       date: data?.date ? new Date(data.date).toISOString().split("T")[0] : "",

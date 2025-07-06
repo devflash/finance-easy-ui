@@ -86,7 +86,7 @@ export type SearchBudgets = {
 
 export interface ISaving{
     _id: string
-    investmentType: string,
+    category: string,
     amount: number,
     userId: string,
     date: Date,
