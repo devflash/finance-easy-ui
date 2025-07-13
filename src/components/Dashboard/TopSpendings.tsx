@@ -9,7 +9,7 @@ import { topSpendings } from "../../mocks/jsons/dashboard.json";
 
 export const TopSpendings = () => {
   return (
-    <Paper>
+    <Paper sx={{ marginTop: "1rem", flex: "1 1 48%" }}>
       <List
         sx={{
           width: "100%",

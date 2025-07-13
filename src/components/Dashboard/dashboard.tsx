@@ -16,19 +16,21 @@ import { TopSpendings } from "./TopSpendings";
 import { BankSpendings } from "./BankSpendings";
 import { CardSpendings } from "./CardSpendings";
 import { Summary } from "./Summary";
+import { BudgetSummary } from "./BudgetSummary";
+import { PaymentMethods } from "./PaymentMethods";
 export const Dashboard = () => {
   return (
     <Box>
       <Typography variant="h5" component="header">
         Dashboard
       </Typography>
-      <Box sx={{ display: "flex", gap: "1rem" }}>
+      <Box sx={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
         <Card title="Total Income" amount={5000} />
         <Card title="Total Expense" amount={4000} />
         <Card title="Total Savings" amount={1000} />
         <Card title="Net Worth" amount={6000} />
       </Box>
-      <Box display="flex" marginTop="1rem">
+      <Box display="flex" marginTop="1rem" flexWrap="wrap">
         <ResponsiveContainer
           width="100%"
           height={200}
@@ -58,10 +60,23 @@ export const Dashboard = () => {
           </LineChart>
         </ResponsiveContainer>
       </Box>
-      <BankSpendings />
-      <CardSpendings />
-      <Summary />
-      <TopSpendings />
+      <Box
+        sx={(theme) => ({
+          [theme.breakpoints.down(990)]: {
+            flexDirection: "column",
+          },
+        })}
+        display="flex"
+        gap="1rem"
+        flexWrap="wrap"
+      >
+        <BudgetSummary />
+        {/* <BankSpendings />
+        <CardSpendings /> */}
+        <Summary />
+        <TopSpendings />
+        <PaymentMethods />
+      </Box>
     </Box>
   );
 };

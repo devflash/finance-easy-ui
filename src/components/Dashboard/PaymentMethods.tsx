@@ -1,27 +1,78 @@
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
-import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 
-export const Summary = () => {
+export const PaymentMethods = () => {
   return (
-    <Paper sx={{ marginTop: "1rem", flex: "1 1 48%" }}>
-      <List
-        sx={{
-          width: "100%",
+    <Paper sx={{ marginTop: "1rem", padding: "1rem", flex: "1 1 48%" }}>
+      <Typography component="h5" variant="h5">
+        Payment Methods
+      </Typography>
+      <List sx={{ paddingTop: 0, paddingBottom: 0 }}>
+        <Typography>Bank</Typography>
+        <ListItem alignItems="flex-start">
+          <ListItemText
+            primary={
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Typography
+                  component="span"
+                  variant="body2"
+                  sx={{ color: "text.primary", fontSize: "1rem" }}
+                >
+                  ICICI Bank
+                  <Typography sx={{ fontSize: "0.8rem" }}>Savings</Typography>
+                </Typography>
+                <Typography
+                  component="span"
+                  variant="body2"
+                  sx={{ fontSize: "1rem" }}
+                >
+                  1298
+                </Typography>
+              </Box>
+            }
+          />
+        </ListItem>
+        <Divider />
+        <ListItem alignItems="flex-start">
+          <ListItemText
+            primary={
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Typography
+                  component="span"
+                  variant="body2"
+                  sx={{ color: "text.primary", fontSize: "1rem" }}
+                >
+                  ICICI Bank
+                  <Typography sx={{ fontSize: "0.8rem" }}>Savings</Typography>
+                </Typography>
+                <Typography
+                  component="span"
+                  variant="body2"
+                  sx={{ fontSize: "1rem" }}
+                >
+                  1298
+                </Typography>
+              </Box>
+            }
+          />
+        </ListItem>
+      </List>
+      <List sx={{ paddingTop: 0, paddingBottom: 0 }}>
+        <Typography>Card</Typography>
 
-          bgcolor: "background.paper",
-          mt: "1rem",
-          borderRadius: "10px",
-        }}
-      >
-        <Typography component="h5" variant="h5" paddingLeft="1rem">
-          Summary
-        </Typography>
-
         <ListItem alignItems="flex-start">
           <ListItemText
             primary={
@@ -35,14 +86,15 @@ export const Summary = () => {
                   variant="body2"
                   sx={{ color: "text.primary", fontSize: "1rem" }}
                 >
-                  Total transactions
+                  Credit Card Ending 1987
+                  <Typography sx={{ fontSize: "0.8rem" }}>Credit</Typography>
                 </Typography>
                 <Typography
                   component="span"
                   variant="body2"
                   sx={{ fontSize: "1rem" }}
                 >
-                  50
+                  1298
                 </Typography>
               </Box>
             }
@@ -62,149 +114,15 @@ export const Summary = () => {
                   variant="body2"
                   sx={{ color: "text.primary", fontSize: "1rem" }}
                 >
-                  Maximum Income
+                  Debit card ending 18776
+                  <Typography sx={{ fontSize: "0.8rem" }}>Debit</Typography>
                 </Typography>
                 <Typography
                   component="span"
                   variant="body2"
                   sx={{ fontSize: "1rem" }}
                 >
-                  1987
-                </Typography>
-              </Box>
-            }
-          />
-        </ListItem>
-        <Divider />
-        <ListItem alignItems="flex-start">
-          <ListItemText
-            primary={
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Typography
-                  component="span"
-                  variant="body2"
-                  sx={{ color: "text.primary", fontSize: "1rem" }}
-                >
-                  Minimum Income
-                </Typography>
-                <Typography
-                  component="span"
-                  variant="body2"
-                  sx={{ fontSize: "1rem" }}
-                >
-                  10
-                </Typography>
-              </Box>
-            }
-          />
-        </ListItem>
-        <Divider />
-        <ListItem alignItems="flex-start">
-          <ListItemText
-            primary={
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Typography
-                  component="span"
-                  variant="body2"
-                  sx={{ color: "text.primary", fontSize: "1rem" }}
-                >
-                  Average Income
-                </Typography>
-                <Typography
-                  component="span"
-                  variant="body2"
-                  sx={{ fontSize: "1rem" }}
-                >
-                  100
-                </Typography>
-              </Box>
-            }
-          />
-        </ListItem>
-        <Divider />
-        <ListItem alignItems="flex-start">
-          <ListItemText
-            primary={
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Typography
-                  component="span"
-                  variant="body2"
-                  sx={{ color: "text.primary", fontSize: "1rem" }}
-                >
-                  Maximum Expense
-                </Typography>
-                <Typography
-                  component="span"
-                  variant="body2"
-                  sx={{ fontSize: "1rem" }}
-                >
-                  1000
-                </Typography>
-              </Box>
-            }
-          />
-        </ListItem>
-        <Divider />
-        <ListItem alignItems="flex-start">
-          <ListItemText
-            primary={
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Typography
-                  component="span"
-                  variant="body2"
-                  sx={{ color: "text.primary", fontSize: "1rem" }}
-                >
-                  Minimum Expense
-                </Typography>
-                <Typography
-                  component="span"
-                  variant="body2"
-                  sx={{ fontSize: "1rem" }}
-                >
-                  1098
-                </Typography>
-              </Box>
-            }
-          />
-        </ListItem>
-        <Divider />
-        <ListItem alignItems="flex-start">
-          <ListItemText
-            primary={
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Typography
-                  component="span"
-                  variant="body2"
-                  sx={{ color: "text.primary", fontSize: "1rem" }}
-                >
-                  Maximum Saving
-                </Typography>
-                <Typography
-                  component="span"
-                  variant="body2"
-                  sx={{ fontSize: "1rem" }}
-                >
-                  100
+                  199
                 </Typography>
               </Box>
             }
