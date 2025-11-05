@@ -68,6 +68,12 @@ const links = [
     icon: (styles: CSSObject) => <OutboxIcon sx={styles} />,
   },
   {
+    key: "reports",
+    name: "Report",
+    path: "/report",
+    icon: (styles: CSSObject) => <OutboxIcon sx={styles} />,
+  },
+  {
     key: "profile",
     name: "Profile",
     path: "/profile",

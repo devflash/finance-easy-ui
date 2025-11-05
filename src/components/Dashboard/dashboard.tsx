@@ -13,8 +13,6 @@ import {
 } from "recharts";
 import { networth } from "../../mocks/jsons/dashboard.json";
 import { TopSpendings } from "./TopSpendings";
-import { BankSpendings } from "./BankSpendings";
-import { CardSpendings } from "./CardSpendings";
 import { Summary } from "./Summary";
 import { BudgetSummary } from "./BudgetSummary";
 import { PaymentMethods } from "./PaymentMethods";
@@ -71,8 +69,6 @@ export const Dashboard = () => {
         flexWrap="wrap"
       >
         <BudgetSummary />
-        {/* <BankSpendings />
-        <CardSpendings /> */}
         <Summary />
         <TopSpendings />
         <PaymentMethods />

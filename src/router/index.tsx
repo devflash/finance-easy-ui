@@ -11,6 +11,7 @@ import { SavingPage } from "../pages/saving.tsx";
 import { ProfilePage } from "../pages/Profile.tsx";
 import { CreateBudget } from "../components/budget/createBudget.tsx";
 import { BudgetOverviewPage } from "../pages/budgetOverviewPage.tsx";
+import { ReportsPage } from "../pages/reportsPage.tsx";
 export const router = createBrowserRouter([
   {
     path: "/login",
@@ -71,6 +72,10 @@ export const router = createBrowserRouter([
       {
         path: "/budget/:budgetId",
         element: <BudgetOverviewPage />,
+      },
+      {
+        path: "/report/",
+        element: <ReportsPage />,
       },
     ],
   },
